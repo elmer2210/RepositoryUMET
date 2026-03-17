@@ -21,9 +21,9 @@ ui:
 # NOTE: these settings define which (publicly available) REST API to use. They are usually
 # 'synced' with the 'dspace.server.url' setting in your backend's local.cfg.
 rest:
-  ssl: true
-  host: api7.dspace.org
-  port: 443
+  ssl: false
+  host: repositorio.umet.edu.ec
+  port: 80
   # NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
   nameSpace: /server
 
@@ -161,7 +161,7 @@ submission:
           style: text-muted
 
 #  Default Language in which the UI will be rendered if the user's browser language is not an active language
-defaultLanguage: en
+defaultLanguage: es
 
 # Languages. DSpace Angular holds a message catalog for each of the following languages.
 # When set to active, users will be able to switch to the use of this language in the user interface.
@@ -292,7 +292,7 @@ themes:
   #
   # # A theme with a handle property will match the community, collection or item with the given
   # # handle, and all collections and/or items within it
-  # - name: 'custom',
+  # - name: 'umet'
   #   handle: '10673/1233'
   #
   # # A theme with a regex property will match the route using a regular expression. If it
@@ -323,27 +323,29 @@ themes:
   # # This theme will use the default bootstrap styling for DSpace components
   # - name: BASE_THEME_NAME
   #
-  - name: dspace
+  - name: umet
     headTags:
     - tagName: link
       attributes:
         rel: icon
-        href: assets/dspace/images/favicons/favicon.ico
+        href: assets/umet/images/favicons/favicon.svg
         sizes: any
+        type: image/svg+xml
     - tagName: link
       attributes:
         rel: icon
-        href: assets/dspace/images/favicons/favicon.svg
+        href: assets/umet/images/favicons/favicon.svg
         type: image/svg+xml
     - tagName: link
       attributes:
         rel: apple-touch-icon
-        href: assets/dspace/images/favicons/apple-touch-icon.png
+        href: assets/umet/images/favicons/favicon.svg
+        type: image/svg+xml
     - tagName: link
       attributes:
         rel: manifest
-        href: assets/dspace/images/favicons/manifest.webmanifest
-
+        href: assets/umet/images/favicons/favicon.svg
+        type: image/svg+xml
 # The default bundles that should always be displayed as suggestions when you upload a new bundle
 bundle:
   standardBundles: [ ORIGINAL, THUMBNAIL, LICENSE ]
