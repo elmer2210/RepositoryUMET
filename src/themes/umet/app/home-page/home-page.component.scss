@@ -1,0 +1,181 @@
+// =============================================
+// HERO WRAPPER
+// =============================================
+.umet-hero-wrapper {
+  background: linear-gradient(160deg, #00253c 0%, #003550 55%, #004060 100%);
+  position: relative;
+  overflow: hidden;
+
+  // Decorative radial glow (top-right)
+  &::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(34, 188, 185, 0.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+}
+
+// =============================================
+// SEARCH BAR IN HERO
+// =============================================
+.umet-hero-search-area {
+  padding: 0 1rem 1.75rem;
+  max-width: 700px;
+
+  ::ng-deep ds-search-form form .input-group {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+    border-radius: 0.375rem;
+    overflow: hidden;
+
+    input.form-control {
+      border: none;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      height: auto;
+
+      &::placeholder {
+        color: #aab5be;
+      }
+    }
+
+    .search-button {
+      border-radius: 0;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+  }
+}
+
+// =============================================
+// BROWSE QUICK-ACCESS ICONS
+// =============================================
+.umet-browse-area {
+  padding-bottom: 1rem;
+
+  .umet-browse-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    margin: 0.5rem 1.25rem;
+    transition: color 0.2s;
+
+    &:hover,
+    &:focus {
+      color: #22bcb9;
+      text-decoration: none;
+
+      .umet-browse-icon {
+        background: rgba(34, 188, 185, 0.4);
+        border-color: #22bcb9;
+      }
+    }
+
+    .umet-browse-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(34, 188, 185, 0.2);
+      border: 1.5px solid rgba(34, 188, 185, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #22bcb9;
+      margin-bottom: 0.6rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    span {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+  }
+}
+
+
+// =============================================
+// STATS SECTION
+// =============================================
+.umet-stats-section {
+  background: #ffffff;
+  border-bottom: 1px solid #e8edf1;
+
+  .umet-stat-item {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .umet-stat-number {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #00253c;
+    margin-bottom: 0.1rem;
+    line-height: 1;
+  }
+
+  .umet-stat-accent {
+    color: #22bcb9;
+  }
+
+  .umet-stat-label {
+    font-size: 0.82rem;
+    color: #6c757d;
+    margin-bottom: 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// =============================================
+// RECENT SUBMISSIONS SECTION
+// =============================================
+.umet-recent-section {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+
+  ::ng-deep ds-recent-item-list {
+    h2, .section-header {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #00253c;
+      border-bottom: 3px solid #22bcb9;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+      margin-bottom: 1.25rem;
+    }
+  }
+}
+
+// =============================================
+// RESPONSIVE
+// =============================================
+@media (max-width: 767px) {
+  .umet-hero-search-area {
+    max-width: 100%;
+  }
+
+  .umet-browse-area .umet-browse-item {
+    margin: 0.5rem 0.6rem;
+
+    .umet-browse-icon {
+      width: 48px;
+      height: 48px;
+      font-size: 1.1rem;
+    }
+
+    span {
+      font-size: 0.75rem;
+    }
+  }
+
+
+}

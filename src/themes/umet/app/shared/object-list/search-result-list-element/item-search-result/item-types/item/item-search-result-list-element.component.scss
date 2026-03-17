@@ -1,0 +1,79 @@
+// =============================================
+// UMET Item Card — matches mockup design
+// =============================================
+
+:host {
+  display: block;
+}
+
+.umet-item-card {
+  background: #ffffff;
+  border: 1px solid #e2e8ed;
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+
+  &:hover {
+    box-shadow: 0 3px 14px rgba(0, 37, 60, 0.09);
+    border-color: #c5d2dc;
+  }
+}
+
+// Title link
+.umet-item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #00253c;
+  text-decoration: none;
+  line-height: 1.45;
+  display: block;
+
+  &:hover {
+    color: #22bcb9;
+    text-decoration: none;
+  }
+}
+
+// Authors
+.umet-item-authors {
+  font-size: 0.82rem;
+  color: #6c757d;
+  margin-top: 0.3rem;
+}
+
+// Meta row
+.umet-item-meta {
+  gap: 0.4rem;
+}
+
+// Subject tags
+.umet-subject-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.6rem;
+  background: #eaeff2;
+  color: #4a5a68;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+// Year
+.umet-item-year {
+  font-size: 0.78rem;
+  color: #8d9fad;
+  font-weight: 500;
+}
+
+// Access badge area — hide the type badge from this zone (shown in meta row instead)
+.umet-access-badge {
+  ::ng-deep ds-themed-type-badge,
+  ::ng-deep ds-themed-status-badge {
+    display: none;
+  }
+
+  ::ng-deep ds-themed-access-status-badge .badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+  }
+}

@@ -1,0 +1,289 @@
+// ================================================================
+// UMET — Community List TREE styles
+// ================================================================
+
+@import '../../../styles/theme_sass_variable_overrides';
+
+// ── Base node reset ──────────────────────────────────────────────
+.umet-tree-node {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// ================================================================
+// ROOT COMMUNITY CARD  (level-root)
+// ================================================================
+.expandable-node.level-root {
+  margin-bottom: 1rem;
+
+  .community-card {
+    background: #fff;
+    border: 1px solid rgba($umet-space, 0.12);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba($umet-space, 0.07);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+
+    &:hover {
+      box-shadow: 0 4px 16px rgba($umet-space, 0.13);
+      border-color: rgba($umet-nova, 0.4);
+    }
+
+    .card-accent {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: linear-gradient(180deg, $umet-nova 0%, darken($umet-nova, 10%) 100%);
+      border-radius: 10px 0 0 10px;
+    }
+
+    .card-body-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1.1rem 1.25rem 1.1rem 1.5rem;
+    }
+
+    .community-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+  }
+
+  &.is-expanded .community-card {
+    border-color: rgba($umet-nova, 0.5);
+    box-shadow: 0 4px 16px rgba($umet-space, 0.12);
+
+    .card-accent {
+      background: $umet-nova;
+    }
+  }
+}
+
+// ================================================================
+// SUB-COMMUNITY CARD  (level-sub)
+// ================================================================
+.expandable-node.level-sub {
+  margin-bottom: 0.5rem;
+
+  .community-card {
+    background: lighten($umet-marfil, 2%);
+    border: 1px solid rgba($umet-space, 0.1);
+    border-radius: 8px;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: darken($umet-marfil, 2%);
+      border-color: rgba($umet-nova, 0.35);
+    }
+
+    .card-accent {
+      background: $umet-zen;
+      width: 4px;
+      border-radius: 8px 0 0 8px;
+    }
+
+    .card-body-inner {
+      padding: 0.8rem 1rem 0.8rem 1.25rem;
+    }
+
+    .community-name {
+      font-size: 0.975rem;
+      font-weight: 600;
+    }
+  }
+}
+
+// ================================================================
+// SHARED CARD INTERNALS
+// ================================================================
+.community-card {
+  .card-body-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .expand-btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    color: $umet-nova;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+    margin-top: 2px;
+
+    &:hover {
+      background: rgba($umet-nova, 0.12);
+    }
+
+    i {
+      font-size: 0.85rem;
+      transition: transform 0.2s ease;
+    }
+
+    &.invisible {
+      visibility: hidden;
+    }
+  }
+
+  .community-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .community-name-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .community-name {
+    color: $umet-space;
+    text-decoration: none;
+    line-height: 1.3;
+    font-family: $font-family-base;
+
+    &:hover {
+      color: $umet-nova;
+      text-decoration: underline;
+    }
+  }
+
+  .item-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 11px;
+    background: rgba($umet-nova, 0.15);
+    color: darken($umet-nova, 10%);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .community-description {
+    color: lighten($umet-space, 20%);
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// ================================================================
+// LEAF NODE (collections & childless communities)
+// ================================================================
+.leaf-node {
+  margin-bottom: 0.3rem;
+
+  .collection-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.55rem 1rem 0.55rem 1.25rem;
+    border-radius: 6px;
+    background: transparent;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: rgba($umet-nova, 0.06);
+    }
+
+    .collection-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      background: rgba($umet-zen, 0.2);
+      margin-top: 1px;
+
+      i {
+        color: darken($umet-zen, 20%);
+        font-size: 0.8rem;
+      }
+    }
+
+    .collection-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .collection-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $umet-space;
+      text-decoration: none;
+      display: inline-block;
+
+      &:hover {
+        color: $umet-nova;
+        text-decoration: underline;
+      }
+    }
+
+    .collection-description {
+      color: lighten($umet-space, 25%);
+      font-size: 0.8rem;
+      margin: 0.15rem 0 0;
+      line-height: 1.45;
+    }
+  }
+}
+
+// ================================================================
+// SHOW MORE BUTTON
+// ================================================================
+.show-more-node {
+  margin: 0.25rem 0 0.75rem;
+}
+
+.show-more-wrapper {
+  padding-left: 1.25rem;
+
+  .btn-show-more {
+    border: 1.5px solid $umet-nova;
+    color: $umet-nova;
+    background: transparent;
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    i {
+      margin-right: 0.3rem;
+    }
+
+    &:hover {
+      background: $umet-nova;
+      color: #fff;
+    }
+  }
+}
+
+// ================================================================
+// LOADING INDICATOR
+// ================================================================
+.node-loading {
+  padding-left: 3rem;
+  padding-top: 0.5rem;
+}

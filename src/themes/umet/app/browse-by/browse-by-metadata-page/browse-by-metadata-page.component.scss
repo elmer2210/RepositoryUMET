@@ -1,0 +1,98 @@
+// ================================================================
+// UMET — Browse By PAGE styles  (shared: metadata / date / title)
+// ================================================================
+
+@import '../../../styles/theme_sass_variable_overrides';
+
+// ── Page Header ──────────────────────────────────────────────────
+.browse-page-header {
+  padding: 2rem 0 0;
+  background: #fff;
+}
+
+// Icon + text row
+.browse-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: 1.1rem;
+  width: fit-content;
+}
+
+// Icon box — matches community list icon style exactly
+.browse-header-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: rgba($umet-nova, 0.12);
+  border: 2px solid rgba($umet-nova, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 1.6rem;
+    color: $umet-nova;
+  }
+}
+
+// Title
+.browse-header-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: $umet-space;
+  margin: 0 0 0.2rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+// Subtitle — teal, same style as community list subtitle
+.browse-header-subtitle {
+  color: $umet-space;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+// Full-width teal divider (matches community list <hr>)
+.browse-header-divider {
+  border: none;
+  border-top: 3px solid $umet-nova;
+  margin: 0;
+  opacity: 1;
+}
+
+// ── Content wrapper ──────────────────────────────────────────────
+.browse-content-wrapper {
+  padding-top: 1.75rem;
+  padding-bottom: 3rem;
+}
+
+// ── Parent context card ──────────────────────────────────────────
+.parent-context-card {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  border-bottom: 1px solid rgba($umet-space, 0.1);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  .comcol-header {
+    flex: 1;
+  }
+}
+
+// ── Browse results ───────────────────────────────────────────────
+.browse-results-section {
+  margin-top: 1rem;
+}
+
+// ── Footer ───────────────────────────────────────────────────────
+.browse-footer {
+  border-top: 1px solid rgba($umet-space, 0.1);
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  color: lighten($umet-space, 15%);
+  font-size: 0.9rem;
+}

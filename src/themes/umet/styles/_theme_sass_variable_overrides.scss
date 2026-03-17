@@ -1,0 +1,42 @@
+// ==========================================================================
+// 1. TIPOGRAFÍA DIGITAL UMET (MONTSERRAT)
+// ==========================================================================
+// Importamos Montserrat desde Google Fonts con sus distintos pesos
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+// Forzamos a Bootstrap a usar Montserrat como la fuente base del sistema web
+$font-family-sans-serif: 'Montserrat', sans-serif;
+$font-family-base: $font-family-sans-serif;
+
+
+// ==========================================================================
+// 2. PALETA PRIMARIA UMET
+// ==========================================================================
+$umet-space:  #00253c; // Azul oscuro
+$umet-nova:   #22bcb9; // Turquesa
+$umet-zen:    #bfd730; // Verde claro
+$umet-marfil: #eaeff2; // Gris claro
+
+$cyan: #207698 !default;
+$yellow: #ec9433 !default;
+$red: #CF4444 !default;
+$dark: #43515f !default;
+
+$body-color: $umet-space
+    !default;                    // Bootstrap $gray-800
+
+
+
+$yiq-contrasted-threshold:  170 !default;
+
+$theme-colors: (
+        primary: $umet-space,
+        secondary: $umet-nova,
+        success: $umet-zen,
+        info: $cyan,
+        warning: $yellow,
+        danger: $red,
+        light: $umet-marfil,
+        dark: $umet-space
+) !default;
+

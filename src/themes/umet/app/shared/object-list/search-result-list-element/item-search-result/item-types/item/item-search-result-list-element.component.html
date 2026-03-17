@@ -1,0 +1,63 @@
+<ds-truncatable [id]="dso.id" *ngIf="object !== undefined && object !== null">
+  <div class="umet-item-card">
+
+    <!-- Top row: title (left) + access status badge (right) -->
+    <div class="d-flex justify-content-between align-items-start">
+
+      <!-- Title -->
+      <div class="umet-item-title-wrap mr-3">
+        <a *ngIf="linkType != linkTypes.None"
+           [target]="(linkType == linkTypes.ExternalLink) ? '_blank' : '_self'"
+           [attr.rel]="(linkType == linkTypes.ExternalLink) ? 'noopener noreferrer' : null"
+           [routerLink]="[itemPageRoute]"
+           class="umet-item-title dont-break-out"
+           [innerHTML]="dsoTitle">
+        </a>
+        <span *ngIf="linkType == linkTypes.None"
+              class="umet-item-title dont-break-out"
+              [innerHTML]="dsoTitle">
+        </span>
+      </div>
+
+      <!-- Access status badge -->
+      <div class="flex-shrink-0 umet-access-badge">
+        <ds-themed-badges *ngIf="showLabel"
+                          [object]="dso"
+                          [context]="context"
+                          [showAccessStatus]="true">
+        </ds-themed-badges>
+      </div>
+
+    </div>
+
+    <!-- Authors row -->
+    <ds-truncatable-part [id]="dso.id" [minLines]="1">
+      <div *ngIf="dso.allMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).length > 0"
+           class="umet-item-authors">
+        <span *ngFor="let author of allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']); let last=last;">
+          <span [innerHTML]="author"></span><span *ngIf="!last">; </span>
+        </span>
+      </div>
+    </ds-truncatable-part>
+
+    <!-- Meta row: type badge + subject tags + year -->
+    <div class="umet-item-meta d-flex flex-wrap align-items-center mt-2">
+
+      <!-- Item type badge (Tesis de grado, Artículo, etc.) -->
+      <ds-themed-type-badge [object]="dso" class="mr-1"></ds-themed-type-badge>
+
+      <!-- Subject tags (up to 2) -->
+      <ng-container *ngFor="let subject of dso.allMetadataValues('dc.subject') | slice:0:2">
+        <span class="umet-subject-tag mr-1">{{ subject }}</span>
+      </ng-container>
+
+      <!-- Year -->
+      <span *ngIf="dso.firstMetadataValue('dc.date.issued')"
+            class="umet-item-year">
+        {{ dso.firstMetadataValue('dc.date.issued') | slice:0:4 }}
+      </span>
+
+    </div>
+
+  </div>
+</ds-truncatable>

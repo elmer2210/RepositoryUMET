@@ -1,0 +1,125 @@
+<footer class="umet-footer">
+
+  <!-- ===== MAIN FOOTER CONTENT ===== -->
+  <div class="umet-footer-main">
+    <div class="container py-5">
+      <div class="row">
+
+        <!-- Brand + Social -->
+        <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+          <a routerLink="/home" class="d-inline-block mb-3">
+            <img src="/assets/umet/images/umet_footer_v2.svg" alt="UMET Logo" class="umet-footer-logo">
+          </a>
+          <p class="umet-follows-label">Síguenos</p>
+          <div class="umet-social-links mb-3">
+            <a href="https://www.facebook.com/umet.edu/" target="_blank" rel="noopener" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/umet_edu/" target="_blank" rel="noopener" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/universidad-metropolitana-del-ecuador/posts/?feedView=all" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCCoGuEZSC7MYmhElsVyf8VA" target="_blank" rel="noopener" aria-label="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+          <p class="umet-footer-note">
+            En el caso de necesitar soporte de la sede Machala dirigirse a umetmachala.edu.ec
+          </p>
+        </div>
+
+        <!-- Guayaquil -->
+        <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+          <h6 class="umet-footer-city">GUAYAQUIL</h6>
+          <div class="umet-campus-block">
+            <p class="umet-campus-name">Facultad FCSHE</p>
+            <p>Av. Francisco Boloña y 1er callejón No. 519</p>
+            <a href="tel:+5946038282" class="umet-phone">(04) 6038282</a>
+          </div>
+          <div class="umet-campus-block">
+            <p class="umet-campus-name">Facultad FCEE</p>
+            <p>Cdla. La Garzota 1era etapa Mz. 23</p>
+            <a href="tel:+5946026608" class="umet-phone">(04) 6026608</a>
+          </div>
+          <div class="umet-campus-block">
+            <p class="umet-campus-name">Facultad FSCF</p>
+            <p>Cdla. La Garzota, Av. Eloy Velásquez</p>
+          </div>
+        </div>
+
+        <!-- Quito -->
+        <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
+          <h6 class="umet-footer-city">QUITO</h6>
+          <div class="umet-campus-block">
+            <p class="umet-campus-name">Facultades FING, FSCF</p>
+            <p>La Coruña N26-95 y San Ignacio</p>
+            <a href="tel:+59322221572" class="umet-phone">(02) 2221572</a>
+          </div>
+          <div class="umet-campus-block">
+            <p class="umet-campus-name">Campus 6 de Diciembre</p>
+            <p>Av. 6 de Diciembre y Gral. Robles</p>
+            <a href="tel:+59322553389" class="umet-phone">(02) 2553389 ext. 1100</a>
+          </div>
+        </div>
+
+        <!-- Machala -->
+        <div class="col-lg-3 col-md-6">
+          <h6 class="umet-footer-city">MACHALA</h6>
+          <div class="umet-campus-block">
+            <p class="umet-campus-name">Campus Junín</p>
+            <p>Calle Bolívar 609 entre Junin y Tarqui</p>
+            <a href="tel:+5972923635" class="umet-phone">(07) 2923635</a>
+          </div>
+          <div class="umet-campus-block">
+            <p class="umet-campus-name">Campus Pajonal</p>
+            <p>Vía al Pajonal</p>
+            <a href="tel:+5972931123" class="umet-phone">(07) 2931123</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LINKS ROW ===== -->
+  <!--div class="umet-footer-links-row">
+    <div class="container py-2">
+      <div class="d-flex flex-wrap justify-content-center">
+        <a href="https://umet.edu.ec/admisiones" target="_blank" rel="noopener">Admisiones</a>
+        <a href="https://umet.edu.ec/la-universidad" target="_blank" rel="noopener">La Universidad</a>
+        <a href="https://umet.edu.ec/trabaja-en-umet" target="_blank" rel="noopener">Trabaja en UMET</a>
+        <a href="https://umet.edu.ec/becas-y-ayudas" target="_blank" rel="noopener">Becas y Ayudas</a>
+        <a href="https://umet.edu.ec/noticias" target="_blank" rel="noopener">Noticias UMET</a>
+        <a href="https://umet.edu.ec/normativa" target="_blank" rel="noopener">Normativa</a>
+        <a href="https://umet.edu.ec/sede-machala" target="_blank" rel="noopener">Sede Machala</a>
+        <a href="https://umet.edu.ec/radio-umet" target="_blank" rel="noopener">Radio UMET</a>
+      </div>
+    </div>
+  </div-->
+
+  <!-- ===== BOTTOM COPYRIGHT ===== -->
+  <div class="umet-footer-bottom">
+    <div class="container py-2 text-center">
+      <p class="mb-1">
+        © {{ dateObj | date:'y' }} Universidad Metropolitana — Repositorio Digital | Powered by DSpace 7
+      </p>
+      <ul class="list-unstyled d-flex flex-wrap justify-content-center mb-0">
+        <li class="mx-2">
+          <a href="javascript:void(0);" (click)="showCookieSettings()">{{ 'footer.link.cookies' | translate }}</a>
+        </li>
+        <li *ngIf="showPrivacyPolicy" class="mx-2">
+          <a routerLink="info/privacy">{{ 'footer.link.privacy-policy' | translate }}</a>
+        </li>
+        <li *ngIf="showEndUserAgreement" class="mx-2">
+          <a routerLink="info/end-user-agreement">{{ 'footer.link.end-user-agreement' | translate }}</a>
+        </li>
+        <li *ngIf="showSendFeedback$ | async" class="mx-2">
+          <a routerLink="info/feedback">{{ 'footer.link.feedback' | translate }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</footer>

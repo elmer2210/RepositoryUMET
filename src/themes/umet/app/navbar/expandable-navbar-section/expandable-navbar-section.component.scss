@@ -1,0 +1,49 @@
+// Inherit base layout
+.expandable-navbar-section {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Dark dropdown menu
+.dropdown-menu {
+  overflow: hidden;
+  min-width: 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+
+  // Dark background matching the navbar
+  background-color: #002d48;
+  border: 1px solid rgba(34, 188, 185, 0.4);
+  border-top: none;
+
+  ::ng-deep a.nav-link {
+    padding-right: var(--bs-spacer);
+    padding-left: var(--bs-spacer);
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.85) !important;
+
+    &:hover,
+    &:focus {
+      color: #22bcb9 !important;
+      background-color: rgba(34, 188, 185, 0.12);
+    }
+  }
+}
+
+// Mobile
+@media screen and (max-width: map-get($grid-breakpoints, md)) {
+  .dropdown-toggle {
+    &:after {
+      float: right;
+      margin-top: calc(var(--bs-spacer) / 2);
+    }
+  }
+
+  .dropdown-menu {
+    border: 0;
+    background-color: rgba(0, 45, 72, 0.95);
+  }
+}

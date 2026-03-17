@@ -1,0 +1,47 @@
+// =============================================
+// UMET Navbar — dark themed
+// =============================================
+
+nav.umet-navbar {
+  background-color: #001a2c;
+  border-bottom: 2px solid #22bcb9;
+  align-items: baseline;
+
+  // Centered nav links
+  .navbar-nav.justify-content-center {
+    width: 100%;
+  }
+
+  // Nav link base style
+  ::ng-deep .navbar-nav .nav-link,
+  ::ng-deep .nav-item > .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+
+    &:hover,
+    &:focus,
+    &.active {
+      color: #22bcb9 !important;
+    }
+  }
+}
+
+// Mobile navbar open state
+@media screen and (max-width: 767.98px) {
+  nav.umet-navbar {
+    position: absolute;
+    overflow: hidden;
+    height: 0;
+    width: 100%;
+    background-color: #00253c;
+
+    &.open {
+      height: auto;
+      min-height: 100vh;
+    }
+  }
+}

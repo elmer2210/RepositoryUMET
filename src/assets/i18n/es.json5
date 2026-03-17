@@ -1184,6 +1184,14 @@
   // "browse.metadata.title.breadcrumbs": "Browse by Title",
   "browse.metadata.title.breadcrumbs": "Examinar por título",
 
+  // UMET — subtítulos descriptivos para cada tipo de navegación browse
+  "browse.subtitle.title":      "Examina todos los documentos del repositorio por título",
+  "browse.subtitle.author":     "Busca documentos por nombre de autor o colaborador",
+  "browse.subtitle.dateissued": "Filtra y explora documentos por fecha de publicación",
+  "browse.subtitle.subject":    "Navega los documentos por área temática o materia",
+  "browse.subtitle.type":       "Explora los documentos según su tipología documental",
+  "browse.subtitle.taxonomy":   "Navega por vocabulario controlado jerárquico de materias",
+
   // "pagination.next.button": "Next",
   "pagination.next.button": "Siguiente",
 
@@ -1267,6 +1275,10 @@
 
   // "browse.title.page": "Browsing {{ collection }} by {{ field }} {{ value }}",
   "browse.title.page": "Examinando {{ collection }} por {{ field }} {{ value }}",
+
+  //"browse.taxonomy.button": "Browse",
+  "browse.taxonomy.button": "Buscar",
+  "browse.taxonomy.title": "Explorar por vocabulario controlado",
 
 
   // "search.browse.item-back": "Back to Results",
@@ -1686,6 +1698,7 @@
 
   // "communityList.title": "List of Communities",
   "communityList.title": "Lista de Comunidades",
+  "communityList.subtitle": "Explora las comunidades y colecciones del repositorio institucional",
 
   // "communityList.showMore": "Show More",
   "communityList.showMore": "Mostrar más",
@@ -4262,6 +4275,9 @@
   // "menu.section.browse_global_by_title": "By Title",
   "menu.section.browse_global_by_title": "Por titulo",
 
+  // "menu.section.browse_global_by_srsc": "By Subject Category",
+  "menu.section.browse_global_by_srsc": "Por categoria temática",
+
   // "menu.section.browse_global_communities_and_collections": "Communities & Collections",
   "menu.section.browse_global_communities_and_collections": "Comunidades",
 
@@ -4594,6 +4610,8 @@
   "mydspace.view-btn": "Ver",
 
 
+  // Navbar home link
+  "menu.section.home": "Inicio",
 
   // "nav.browse.header": "All of DSpace",
   "nav.browse.header": "Todo DSpace",

@@ -1,0 +1,55 @@
+<div class="umet-browse-by-page">
+
+  <!-- ══ Page Header — same visual style as community list ═══ -->
+  <div class="browse-page-header">
+    <div class="container">
+
+      <div class="browse-header-inner">
+
+        <!-- Icon box -->
+        <div class="browse-header-icon">
+          <i class="fas fa-sitemap"></i>
+        </div>
+
+        <!-- Title + subtitle -->
+        <div class="browse-header-text">
+          <h1 class="browse-header-title">
+            {{ 'browse.taxonomy.title' | translate }}
+          </h1>
+          <p class="browse-header-subtitle">
+            {{ 'browse.subtitle.taxonomy' | translate }}
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Full-width teal divider -->
+      <hr class="browse-header-divider" />
+
+    </div>
+  </div>
+
+  <!-- ══ Content ══════════════════════════════════════════════ -->
+  <div class="container browse-content-wrapper">
+
+    <div class="taxonomy-tree-wrapper">
+      <ds-vocabulary-treeview [vocabularyOptions]="vocabularyOptions"
+                              [multiSelect]="true"
+                              (select)="onSelect($event)"
+                              (deselect)="onDeselect($event)">
+      </ds-vocabulary-treeview>
+    </div>
+
+    <div class="taxonomy-actions">
+      <a class="btn btn-taxonomy-search"
+         [routerLink]="['/search']"
+         [queryParams]="queryParams"
+         [queryParamsHandling]="'merge'">
+        <i class="fas fa-search"></i>
+        {{ 'browse.taxonomy.button' | translate }}
+      </a>
+    </div>
+
+  </div>
+
+</div>

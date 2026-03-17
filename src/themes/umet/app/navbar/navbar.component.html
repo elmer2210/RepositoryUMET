@@ -1,0 +1,37 @@
+<nav [ngClass]="{'open': !(menuCollapsed | async)}"
+    [@slideMobileNav]="!(windowService.isXsOrSm() | async) ? 'default' : ((menuCollapsed | async) ? 'collapsed' : 'expanded')"
+    class="navbar navbar-dark navbar-expand-md p-md-0 navbar-container umet-navbar"
+    role="navigation" [attr.aria-label]="'nav.main.description' | translate">
+
+  <div class="navbar-inner-container w-100" [class.container]="!(isXsOrSm$ | async)">
+    <div class="reset-padding-md w-100">
+      <div id="collapsingNav">
+        <ul class="navbar-nav navbar-navigation shadow-none mx-auto justify-content-center">
+
+          <!-- Inicio (Home) static link -->
+          <li class="nav-item">
+            <a class="nav-link"
+               routerLink="/home"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">
+              {{ 'menu.section.home' | translate }}
+            </a>
+          </li>
+
+          <!-- User menu on mobile when authenticated -->
+          <li *ngIf="(isXsOrSm$ | async) && (isAuthenticated$ | async)">
+            <ds-user-menu [inExpandableNavbar]="true"></ds-user-menu>
+          </li>
+
+          <!-- Dynamic menu sections (Comunidades, Explorar, Ayuda, etc.) -->
+          <ng-container *ngFor="let section of (sections | async)">
+            <ng-container
+              *ngComponentOutlet="(sectionMap$ | async).get(section.id)?.component; injector: (sectionMap$ | async).get(section.id)?.injector;">
+            </ng-container>
+          </ng-container>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

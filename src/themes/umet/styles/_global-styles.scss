@@ -1,0 +1,131 @@
+// ===================================================
+// UMET Theme — Global Styles
+// ===================================================
+
+// Import base global styles from dspace-angular core
+@import '../../../styles/_global-styles.scss';
+
+// ===================================================
+// ROOT LAYOUT — remove default top margin so home hero is flush with navbar
+// ===================================================
+.main-content {
+  margin-top: 0 !important;
+}
+
+// Hide breadcrumbs on home page (they add an empty grey bar)
+ds-home-page ~ ds-themed-breadcrumbs,
+.main-content > ds-themed-breadcrumbs {
+  display: none;
+}
+
+// ===================================================
+// HEADER — dark background
+// ===================================================
+ds-header header,
+header {
+  background-color: #00253C !important;
+}
+
+// Fix icon/button colors inside the dark header nav
+ds-header .navbar-light .navbar-toggler-icon,
+ds-header .navbar-toggler {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+ds-header .navbar-light .navbar-toggler:hover {
+  color: #22bcb9 !important;
+}
+
+// ===================================================
+// NAVBAR — dark background + white links
+// ===================================================
+ds-navbar nav.navbar {
+  background-color: #00253c !important;
+}
+
+// Override Bootstrap navbar-light link colors for dark background
+ds-navbar .navbar-light .navbar-nav .nav-link,
+ds-navbar .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+
+  &:hover,
+  &:focus,
+  &.active {
+    color: #22bcb9 !important;
+  }
+}
+
+// Expandable navbar section links
+ds-navbar ::ng-deep a.nav-link,
+ds-navbar ::ng-deep .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+
+  &:hover,
+  &.active {
+    color: #22bcb9 !important;
+  }
+}
+
+// Mobile navbar open state — keep dark background
+@media screen and (max-width: 767.98px) {
+  ds-navbar .navbar.open {
+    background-color: #00253c !important;
+  }
+}
+
+// ===================================================
+// LOGIN BUTTON — teal outline pill
+// ===================================================
+ds-themed-auth-nav-menu a.btn,
+ds-themed-auth-nav-menu button.btn {
+  border-color: #22bcb9 !important;
+  color: #22bcb9 !important;
+  border-radius: 20px;
+  padding: 0.3rem 1rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+
+  &:hover,
+  &:focus {
+    background-color: #22bcb9 !important;
+    color: #fff !important;
+  }
+}
+
+// ===================================================
+// RECENT SUBMISSIONS — section heading and card wrapper
+// ===================================================
+ds-recent-item-list {
+  display: block;
+
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #00253c;
+    border-bottom: 3px solid #22bcb9;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  // Remove default top border separator line above the heading
+  .d-flex.flex-row.border-bottom {
+    display: none !important;
+  }
+
+  // Gap between items
+  .my-4 {
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+// ===================================================
+// ACCESS STATUS BADGE — "Acceso abierto"
+// ===================================================
+.badge-success,
+.badge.badge-success {
+  background-color: #22bcb9 !important;
+  color: #fff !important;
+}

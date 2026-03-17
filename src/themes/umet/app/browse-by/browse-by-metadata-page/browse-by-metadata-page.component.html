@@ -1,0 +1,105 @@
+<div class="umet-browse-by-page">
+
+  <!-- ══ Page Header — same visual style as community list ═══ -->
+  <div class="browse-page-header">
+    <div class="container">
+
+      <div class="browse-header-inner">
+
+        <!-- Icon box — icon changes per browse type -->
+        <div class="browse-header-icon">
+          <i class="fas" [ngClass]="getBrowseIcon()"></i>
+        </div>
+
+        <!-- Title + subtitle -->
+        <div class="browse-header-text">
+          <h1 class="browse-header-title">
+            {{ 'browse.metadata.' + browseId | translate }}
+          </h1>
+          <p class="browse-header-subtitle">
+            {{ 'browse.subtitle.' + browseId | translate }}
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Full-width teal divider (matches community list) -->
+      <hr class="browse-header-divider" />
+
+    </div>
+  </div>
+
+  <!-- ══ Content ══════════════════════════════════════════════ -->
+  <div class="container browse-content-wrapper">
+
+    <!-- Parent context (community / collection) -->
+    <ng-container *ngVar="(parent$ | async) as parent">
+      <ng-container *ngIf="parent?.payload as parentContext">
+
+        <div class="parent-context-card">
+          <header class="comcol-header mr-auto">
+            <ds-comcol-page-header [name]="dsoNameService.getName(parentContext)">
+            </ds-comcol-page-header>
+            <ds-comcol-page-logo *ngIf="logo$"
+                                 [logo]="(logo$ | async)?.payload"
+                                 [alternateText]="'Community or Collection Logo'">
+            </ds-comcol-page-logo>
+            <ds-themed-comcol-page-handle
+                [content]="parentContext.handle"
+                [title]="parentContext.type + '.page.handle'">
+            </ds-themed-comcol-page-handle>
+            <ds-comcol-page-content [content]="parentContext.introductoryText"
+                                    [hasInnerHtml]="true">
+            </ds-comcol-page-content>
+            <ds-comcol-page-content [content]="parentContext.sidebarText"
+                                    [hasInnerHtml]="true"
+                                    [title]="'community.page.news'">
+            </ds-comcol-page-content>
+          </header>
+          <ds-dso-edit-menu></ds-dso-edit-menu>
+        </div>
+
+        <ds-themed-comcol-page-browse-by [id]="parentContext.id"
+                                         [contentType]="parentContext.type">
+        </ds-themed-comcol-page-browse-by>
+
+      </ng-container>
+    </ng-container>
+
+    <!-- Browse results -->
+    <section class="browse-results-section">
+      <ds-browse-by *ngIf="startsWithOptions"
+        title="{{ 'browse.title' | translate: {
+          collection: dsoNameService.getName((parent$ | async)?.payload),
+          field: 'browse.metadata.' + browseId | translate,
+          startsWith: (startsWith) ? ('browse.startsWith' | translate: { startsWith: '&quot;' + startsWith + '&quot;' }) : '',
+          value: (value) ? '&quot;' + value + '&quot;' : ''
+        } }}"
+        parentname="{{ dsoNameService.getName((parent$ | async)?.payload) || ('browse.metadata.' + browseId | translate) }}"
+        [objects$]="(items$ !== undefined) ? items$ : browseEntries$"
+        [paginationConfig]="(currentPagination$ | async)"
+        [sortConfig]="(currentSort$ | async)"
+        [type]="startsWithType"
+        [startsWithOptions]="startsWithOptions"
+        (prev)="goPrev()"
+        (next)="goNext()">
+      </ds-browse-by>
+      <ds-themed-loading *ngIf="!startsWithOptions"
+                         message="{{ 'loading.browse-by-page' | translate }}">
+      </ds-themed-loading>
+    </section>
+
+    <!-- Footer copyright -->
+    <ng-container *ngVar="(parent$ | async) as parent">
+      <ng-container *ngIf="parent?.payload as parentContext">
+        <footer *ngIf="parentContext.copyrightText" class="browse-footer">
+          <ds-comcol-page-content [content]="parentContext.copyrightText"
+                                  [hasInnerHtml]="true">
+          </ds-comcol-page-content>
+        </footer>
+      </ng-container>
+    </ng-container>
+
+  </div>
+
+</div>

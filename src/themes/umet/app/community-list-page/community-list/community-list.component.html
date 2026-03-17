@@ -1,0 +1,102 @@
+<ds-themed-loading *ngIf="(dataSource.loading$ | async) && !loadingNode"></ds-themed-loading>
+
+<cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+
+  <!-- ══ SHOW MORE NODE ═══════════════════════════════════════ -->
+  <cdk-tree-node *cdkTreeNodeDef="let node; when: isShowMore" cdkTreeNodePadding
+                 class="umet-tree-node show-more-node">
+    <div class="show-more-wrapper">
+      <button *ngIf="node !== loadingNode"
+              (click)="getNextPage(node)"
+              class="btn btn-show-more" role="button">
+        <i class="fas fa-angle-down"></i>
+        {{ 'communityList.showMore' | translate }}
+      </button>
+      <ds-themed-loading *ngIf="node === loadingNode && dataSource.loading$ | async"></ds-themed-loading>
+    </div>
+  </cdk-tree-node>
+
+  <!-- ══ EXPANDABLE NODE (communities with children) ══════════ -->
+  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
+                 class="umet-tree-node expandable-node"
+                 [class.level-root]="node.level === 0"
+                 [class.level-sub]="node.level > 0"
+                 [class.is-expanded]="node.isExpanded">
+
+    <div class="community-card">
+      <!-- Card accent bar (visible on root level) -->
+      <div class="card-accent"></div>
+
+      <div class="card-body-inner">
+
+        <!-- Toggle button -->
+        <button type="button" class="expand-btn"
+                cdkTreeNodeToggle
+                [title]="'toggle ' + dsoNameService.getName(node.payload)"
+                [attr.aria-label]="'toggle ' + dsoNameService.getName(node.payload)"
+                (click)="toggleExpanded(node)"
+                [ngClass]="(hasChild(null, node) | async) ? '' : 'invisible'"
+                [attr.data-test]="(hasChild(null, node) | async) ? 'expand-button' : ''">
+          <i class="fas"
+             [class.fa-chevron-down]="node.isExpanded"
+             [class.fa-chevron-right]="!node.isExpanded">
+          </i>
+        </button>
+
+        <!-- Community info -->
+        <div class="community-info">
+          <div class="community-name-row">
+            <a [routerLink]="node.route" class="community-name">
+              {{ dsoNameService.getName(node.payload) }}
+            </a>
+            <span *ngIf="node.payload.archivedItemsCount >= 0"
+                  class="item-count-badge"
+                  [title]="node.payload.archivedItemsCount + ' items'">
+              {{ node.payload.archivedItemsCount }}
+            </span>
+          </div>
+
+          <ds-truncatable [id]="node.id">
+            <ds-truncatable-part [id]="node.id" [minLines]="2">
+              <p *ngIf="node.payload.shortDescription" class="community-description">
+                {{ node.payload.shortDescription }}
+              </p>
+            </ds-truncatable-part>
+          </ds-truncatable>
+        </div>
+
+      </div><!-- /card-body-inner -->
+    </div><!-- /community-card -->
+
+    <!-- Loading indicator when expanding this node -->
+    <div class="node-loading" *ngIf="node === loadingNode && dataSource.loading$ | async">
+      <ds-themed-loading></ds-themed-loading>
+    </div>
+
+  </cdk-tree-node>
+
+  <!-- ══ LEAF NODE (collections & childless communities) ══════ -->
+  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+                 class="umet-tree-node leaf-node">
+
+    <div class="collection-item">
+      <span class="collection-icon">
+        <i class="fas fa-folder"></i>
+      </span>
+      <div class="collection-content">
+        <a [routerLink]="node.route" class="collection-name">
+          {{ dsoNameService.getName(node.payload) }}
+        </a>
+        <ds-truncatable [id]="node.id">
+          <ds-truncatable-part [id]="node.id" [minLines]="2">
+            <p *ngIf="node.payload.shortDescription" class="collection-description">
+              {{ node.payload.shortDescription }}
+            </p>
+          </ds-truncatable-part>
+        </ds-truncatable>
+      </div>
+    </div>
+
+  </cdk-tree-node>
+
+</cdk-tree>

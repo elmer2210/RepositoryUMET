@@ -1,0 +1,22 @@
+// Override CSS variables for the UMET dark theme
+
+:root {
+  // Logo height
+  --ds-header-logo-height: 48px;
+  --ds-header-logo-height-xs: 40px;
+
+  // Header icon colors (search, language icons)
+  --ds-header-icon-color: rgba(255, 255, 255, 0.8);
+  --ds-header-icon-color-hover: #22bcb9;
+
+  // Navbar bottom border — teal accent
+  --ds-header-navbar-border-bottom-color: #22bcb9;
+
+  // Navbar link colors — white on dark bg
+  --ds-navbar-link-color: rgba(255, 255, 255, 0.85);
+  --ds-navbar-link-color-hover: #22bcb9;
+
+  // Footer background — already handled in component SCSS
+  --ds-footer-bg: #00253c;
+  --ds-top-footer-bg: #00253c;
+}

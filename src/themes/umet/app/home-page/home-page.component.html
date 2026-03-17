@@ -1,0 +1,83 @@
+<!-- ===== HERO SECTION ===== -->
+<div class="umet-hero-wrapper">
+  <ng-container *ngIf="(site$ | async) as site">
+    <ds-view-tracker [object]="site"></ds-view-tracker>
+  </ng-container>
+
+  <ds-themed-home-news></ds-themed-home-news>
+
+  <!-- Search bar inside hero -->
+  <div class="container umet-hero-search-area">
+    <ds-themed-search-form
+      [inPlaceSearch]="false"
+      [brandColor]="'secondary'"
+      [searchPlaceholder]="'home.search-form.placeholder' | translate">
+    </ds-themed-search-form>
+  </div>
+
+  <!-- Browse quick-access icons -->
+  <div class="container umet-browse-area pb-5">
+    <div class="d-flex justify-content-center flex-wrap">
+      <a routerLink="/community-list" class="umet-browse-item">
+        <div class="umet-browse-icon">
+           <i class="fas fa-sitemap" aria-hidden="true"></i>
+        </div>
+        <span>Comunidades</span>
+      </a>
+      <a routerLink="/browse/author" class="umet-browse-item">
+        <div class="umet-browse-icon">
+          <i class="fas fa-user-friends" aria-hidden="true"></i>
+        </div>
+        <span>Autores</span>
+      </a>
+      <a routerLink="/browse/title" class="umet-browse-item">
+        <div class="umet-browse-icon">
+          <i class="fas fa-rocket" aria-hidden="true"></i>
+        </div>
+        <span>Títulos</span>
+      </a>
+      <a routerLink="/browse/dateissued" class="umet-browse-item">
+        <div class="umet-browse-icon">
+          <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+        </div>
+        <span>Fechas</span>
+      </a>
+      <a routerLink="/browse/subject" class="umet-browse-item">
+        <div class="umet-browse-icon">
+          <i class="fas fa-th" aria-hidden="true"></i>
+        </div>
+        <span>Materias</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== STATS SECTION ===== -->
+<div class="umet-stats-section">
+  <div class="container">
+    <div class="row text-center py-4">
+      <div class="col-6 col-md-3 umet-stat-item">
+        <p class="umet-stat-number">{{ totalDocumentos | number }}</p>
+        <p class="umet-stat-label">Documentos</p>
+      </div>
+      <div class="col-6 col-md-3 umet-stat-item">
+        <p class="umet-stat-number umet-stat-accent">{{ totalAutores | number }}</p>
+        <p class="umet-stat-label">Autores</p>
+      </div>
+      <div class="col-6 col-md-3 umet-stat-item">
+        <p class="umet-stat-number">{{ totalColecciones | number }}</p>
+        <p class="umet-stat-label">Colecciones</p>
+      </div>
+      <div class="col-6 col-md-3 umet-stat-item">
+        <p class="umet-stat-number umet-stat-accent">{{ totalDescargas | number }}</p>
+        <p class="umet-stat-label">Descargas</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RECENT SUBMISSIONS ===== -->
+<div class="container umet-recent-section">
+  <ds-recent-item-list *ngIf="recentSubmissionspageSize > 0"></ds-recent-item-list>
+</div>

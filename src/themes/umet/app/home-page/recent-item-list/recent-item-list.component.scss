@@ -1,0 +1,22 @@
+// Section heading
+.umet-section-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #00253c;
+  display: inline-block;
+  border-bottom: 3px solid #22bcb9;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1.5rem;
+}
+
+// Items wrapper — removes the default .my-4 gaps and adds card styling via the item component
+.umet-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.umet-item-wrapper {
+  // Individual card container — actual card styling is in item-search-result-list-element
+  
+}

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /d/DSpace/dspace-angular/src/themes/umet -name *.config.*)",
+      "Bash(head -10 grep -rn \"umet\\\\|''''umet''''\\\\|themeName\\\\|name:\" /d/DSpace/dspace-angular/src/app/app.module.ts)",
+      "Bash(grep -rn umet /d/DSpace/dspace-angular/config/*.yml)",
+      "Bash(grep -rn listableObjectComponent.*''custom'' /d/DSpace/dspace-angular/src/themes/umet/)",
+      "Bash(find:*)",
+      "Bash(sort find:*)",
+      "Bash(grep -rn \"@import ''../../styles/theme_sass_variable_overrides''\" /d/DSpace/dspace-angular/src/themes/umet/app/)"
+    ]
+  }
+}
