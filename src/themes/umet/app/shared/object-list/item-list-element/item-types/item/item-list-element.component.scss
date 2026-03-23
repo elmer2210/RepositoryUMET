@@ -1,6 +1,7 @@
 // =============================================
-// UMET Item Card — Search & Browse list element
+// UMET Item Card — Browse list element
 // Paleta: Space #00253C · Nova #22BCB9 · Zen #BFD730 · Marfil #EAEFF2
+// Mismo diseño que item-search-result-list-element
 // =============================================
 
 :host {
@@ -38,7 +39,7 @@
     display: block;
     border-radius: 6px;
     overflow: hidden;
-    line-height: 0; // remove gap below inline img
+    line-height: 0;
   }
 
   // Fuerza al ds-thumbnail a llenar la columna fija
@@ -67,7 +68,7 @@
 // ── Content column ────────────────────────────────────────────────────────────
 .umet-content-col {
   flex: 1 1 0;
-  min-width: 0; // required for text truncation inside flex child
+  min-width: 0;
 }
 
 // ── Badges row ────────────────────────────────────────────────────────────────
@@ -79,7 +80,6 @@
   margin-bottom: 0.55rem;
 }
 
-// Base type badge
 .umet-type-badge {
   display: inline-flex;
   align-items: center;
@@ -94,62 +94,14 @@
 }
 
 // ── Type color variants ───────────────────────────────────────────────────────
-
-// Tesis / Trabajo de Grado — Space (azul oscuro)
-.umet-type-thesis {
-  background: rgba(0, 37, 60, 0.07);
-  color: #00253c;
-  border-color: rgba(0, 37, 60, 0.22);
-}
-
-// Artículo — Nova (teal)
-.umet-type-article {
-  background: rgba(34, 188, 185, 0.1);
-  color: #1a8f8c;
-  border-color: rgba(34, 188, 185, 0.35);
-}
-
-// Libro / Capítulo — Zen (lima)
-.umet-type-book {
-  background: rgba(191, 215, 48, 0.13);
-  color: #5c7a00;
-  border-color: rgba(191, 215, 48, 0.45);
-}
-
-// Ponencia — ámbar complementario
-.umet-type-conference {
-  background: rgba(230, 126, 0, 0.1);
-  color: #b86000;
-  border-color: rgba(230, 126, 0, 0.3);
-}
-
-// Documento de Trabajo / Informe — gris-azul Space
-.umet-type-report {
-  background: rgba(90, 115, 135, 0.09);
-  color: #3b5a6e;
-  border-color: rgba(90, 115, 135, 0.25);
-}
-
-// Dataset / Software — violeta
-.umet-type-dataset {
-  background: rgba(111, 66, 193, 0.08);
-  color: #5e30b5;
-  border-color: rgba(111, 66, 193, 0.22);
-}
-
-// Imagen / Video / Audio — rosa-rojo
-.umet-type-media {
-  background: rgba(220, 53, 69, 0.08);
-  color: #b52030;
-  border-color: rgba(220, 53, 69, 0.22);
-}
-
-// Sin tipo / otro — Marfil neutro
-.umet-type-other {
-  background: #eaeff2;
-  color: #4a5a68;
-  border-color: #c5d2dc;
-}
+.umet-type-thesis     { background: rgba(0, 37, 60, 0.07);     color: #00253c; border-color: rgba(0, 37, 60, 0.22); }
+.umet-type-article    { background: rgba(34, 188, 185, 0.1);   color: #1a8f8c; border-color: rgba(34, 188, 185, 0.35); }
+.umet-type-book       { background: rgba(191, 215, 48, 0.13);  color: #5c7a00; border-color: rgba(191, 215, 48, 0.45); }
+.umet-type-conference { background: rgba(230, 126, 0, 0.1);    color: #b86000; border-color: rgba(230, 126, 0, 0.3); }
+.umet-type-report     { background: rgba(90, 115, 135, 0.09);  color: #3b5a6e; border-color: rgba(90, 115, 135, 0.25); }
+.umet-type-dataset    { background: rgba(111, 66, 193, 0.08);  color: #5e30b5; border-color: rgba(111, 66, 193, 0.22); }
+.umet-type-media      { background: rgba(220, 53, 69, 0.08);   color: #b52030; border-color: rgba(220, 53, 69, 0.22); }
+.umet-type-other      { background: #eaeff2; color: #4a5a68;   border-color: #c5d2dc; }
 
 // ── Open Access badge (naranja SPARC) ─────────────────────────────────────────
 .umet-oa-badge {
@@ -231,7 +183,6 @@
   border-radius: 0 6px 6px 0;
   margin-top: 0.55rem;
 
-  // "Más..." / truncation toggle inherits link style
   ::ng-deep a.read-more,
   ::ng-deep .truncatable-toggle {
     color: #22bcb9;
@@ -241,7 +192,7 @@
   }
 }
 
-// ── Responsive: stack on small screens ───────────────────────────────────────
+// ── Responsive ────────────────────────────────────────────────────────────────
 @media (max-width: 480px) {
   .umet-card-inner {
     flex-direction: column;

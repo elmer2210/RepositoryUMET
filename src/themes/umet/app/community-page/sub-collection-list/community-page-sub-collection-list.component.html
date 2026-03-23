@@ -1,0 +1,47 @@
+<ng-container *ngVar="(subCollectionsRDObs | async) as subCollectionsRD">
+
+  <div class="umet-sublist-section" *ngIf="subCollectionsRD?.hasSucceeded && subCollectionsRD?.payload.totalElements > 0" @fadeIn>
+
+    <!-- ══ Section header ══════════════════════════════════════ -->
+    <div class="umet-sublist-header">
+      <div class="umet-sublist-header-icon umet-sublist-header-icon--collection">
+        <i class="fas fa-folder-open"></i>
+      </div>
+      <h2 class="umet-sublist-title">{{'community.sub-collection-list.head' | translate}}</h2>
+      <span class="umet-sublist-count">{{ subCollectionsRD.payload.totalElements }}</span>
+    </div>
+
+    <!-- ══ Cards ═══════════════════════════════════════════════ -->
+    <div class="umet-sublist-items">
+      <div class="umet-sublist-card umet-sublist-card--collection" *ngFor="let collection of subCollectionsRD.payload.page">
+        <div class="umet-card-accent umet-card-accent--collection"></div>
+        <div class="umet-card-body">
+          <div class="umet-card-icon umet-card-icon--collection">
+            <i class="fas fa-folder"></i>
+          </div>
+          <div class="umet-card-info">
+            <a [routerLink]="['/collections', collection.id]" class="umet-card-name">
+              {{ collection.name }}
+            </a>
+            <p *ngIf="collection.shortDescription" class="umet-card-desc">
+              {{ collection.shortDescription }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Pagination ══════════════════════════════════════════ -->
+    <div *ngIf="subCollectionsRD.payload.totalElements > config.pageSize">
+      <ds-pagination [paginationOptions]="config"
+                     [collectionSize]="subCollectionsRD.payload.totalElements"
+                     [sortOptions]="sortConfig">
+      </ds-pagination>
+    </div>
+
+  </div>
+
+  <ds-error *ngIf="subCollectionsRD?.hasFailed" message="{{'error.sub-collections' | translate}}"></ds-error>
+  <ds-themed-loading *ngIf="subCollectionsRD?.isLoading" message="{{'loading.sub-collections' | translate}}"></ds-themed-loading>
+
+</ng-container>

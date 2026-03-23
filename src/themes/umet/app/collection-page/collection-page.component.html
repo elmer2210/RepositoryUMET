@@ -1,0 +1,76 @@
+<div *ngVar="(collectionRD$ | async) as collectionRD">
+
+  <!-- ══ Page Header ══════════════════════════════════════════ -->
+  <div class="umet-collection-page-header" *ngIf="collectionRD?.hasSucceeded && collectionRD?.payload">
+    <div class="container">
+      <div class="umet-collection-header-content">
+        <div class="umet-collection-header-icon">
+          <i class="fas fa-folder-open"></i>
+        </div>
+        <div>
+          <h1 class="umet-collection-page-title">{{ dsoNameService.getName(collectionRD.payload) }}</h1>
+          <p class="umet-collection-page-subtitle">Repositorio Institucional UMET</p>
+          <a *ngIf="collectionRD.payload.handle" class="umet-collection-handle" href="{{ collectionRD.payload.handle }}">
+            <i class="fas fa-link"></i> {{ collectionRD.payload.handle }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Collection Content ════════════════════════════════════ -->
+  <div class="container">
+    <div class="umet-collection-page" *ngIf="collectionRD?.hasSucceeded" @fadeInOut>
+      <div *ngIf="collectionRD?.payload as collection">
+        <ds-view-tracker [object]="collection"></ds-view-tracker>
+
+        <div class="d-flex flex-row border-bottom mb-4 pb-4">
+          <header class="comcol-header mr-auto">
+            <!-- Collection logo -->
+            <ds-comcol-page-logo *ngIf="logoRD$" [logo]="(logoRD$ | async)?.payload" [alternateText]="'Collection Logo'">
+            </ds-comcol-page-logo>
+            <!-- Introductory text -->
+            <ds-comcol-page-content [content]="collection.introductoryText" [hasInnerHtml]="true">
+            </ds-comcol-page-content>
+            <!-- News -->
+            <ds-comcol-page-content [content]="collection.sidebarText" [hasInnerHtml]="true"
+              [title]="'collection.page.news'">
+            </ds-comcol-page-content>
+          </header>
+          <ds-dso-edit-menu></ds-dso-edit-menu>
+          <div class="pl-2 space-children-mr">
+            <ds-dso-page-subscription-button [dso]="collection"></ds-dso-page-subscription-button>
+          </div>
+        </div>
+
+        <section class="comcol-page-browse-section">
+          <!-- Browse-By Links -->
+          <ds-themed-comcol-page-browse-by [id]="collection.id" [contentType]="collection.type">
+          </ds-themed-comcol-page-browse-by>
+
+          <ng-container *ngVar="(itemRD$ | async) as itemRD">
+            <div class="mt-4" *ngIf="itemRD?.hasSucceeded" @fadeIn>
+              <h3 class="sr-only">{{'collection.page.browse.recent.head' | translate}}</h3>
+              <ds-viewable-collection [config]="paginationConfig" [sortConfig]="sortConfig" [objects]="itemRD" [hideGear]="true">
+              </ds-viewable-collection>
+            </div>
+            <ds-error *ngIf="itemRD?.hasFailed" message="{{'error.recent-submissions' | translate}}"></ds-error>
+            <ds-themed-loading *ngIf="!itemRD || itemRD.isLoading" message="{{'loading.recent-submissions' | translate}}"></ds-themed-loading>
+            <div *ngIf="!itemRD?.isLoading && itemRD?.payload?.page.length === 0" class="alert alert-info w-100" role="alert">
+              {{'collection.page.browse.recent.empty' | translate}}
+            </div>
+          </ng-container>
+        </section>
+
+        <footer *ngIf="collection.copyrightText" class="border-top my-5 pt-4">
+          <ds-comcol-page-content [content]="collection.copyrightText" [hasInnerHtml]="true">
+          </ds-comcol-page-content>
+        </footer>
+      </div>
+    </div>
+
+    <ds-error *ngIf="collectionRD?.hasFailed" message="{{'error.collection' | translate}}"></ds-error>
+    <ds-themed-loading *ngIf="collectionRD?.isLoading" message="{{'loading.collection' | translate}}"></ds-themed-loading>
+  </div>
+
+</div>

@@ -1,0 +1,266 @@
+// =============================================
+// UMET — Item Detail Page (Publication)
+// Paleta: Space #00253C · Nova #22BCB9 · Zen #BFD730 · Marfil #EAEFF2
+// =============================================
+@import '../../../../../styles/theme_sass_variable_overrides';
+
+// ── Layout ───────────────────────────────────────────────────────────────────
+.umet-item-layout {
+  margin-top: 1.75rem;
+  padding-bottom: 3rem;
+}
+
+// ── SIDEBAR ───────────────────────────────────────────────────────────────────
+.umet-item-sidebar {
+  padding-right: 1.75rem;
+
+  // Etiqueta unificada para todos los campos del sidebar.
+  // Los <h5> de DSpace necesitan !important por especificidad.
+  ::ng-deep h5 {
+    display: block !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #00253c !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1.3 !important;
+  }
+
+  // Nuestros <span> propios (Tipo de documento, Licencia) —
+  // EXACTAMENTE el mismo estilo que los h5 de DSpace
+  .umet-sidebar-label {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #00253c;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  // Valor de texto plano para campos del sidebar
+  .umet-sidebar-value {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #3d5464;
+    line-height: 1.4;
+  }
+
+  .umet-sidebar-link {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #22bcb9;
+    text-decoration: none;
+    word-break: break-all;
+
+    &:hover {
+      color: #00253c;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Campos genéricos del sidebar — espaciado uniforme
+.umet-sidebar-field {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #eaeff2;
+  &:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+}
+
+// Sección del sidebar (files, etc.)
+.umet-sidebar-section {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #eaeff2;
+}
+
+// Archivos descargables (hereda spacing de .umet-sidebar-section)
+.umet-files-section {
+  ::ng-deep {
+    .item-page-field-wrapper { margin-bottom: 0; }
+    ds-file-download-link a,                                                                                      
+      .file-section-entry a {                                                                                       
+        color: #22bcb9;                                                                                             
+        font-size: 1rem;                                                                                         
+        font-weight: 600;                                                                                           
+        text-decoration: none;                                                                                      
+        //word-break: break-word;                                                                                     
+        //display: inline-flex;                                                                                       
+        //align-items: center;                                                                                        
+        gap: 0.4rem;                                                                                                
+        &:hover { color: #00253c; text-decoration: underline; }                                                     
+      } 
+  }
+}
+
+// ── Type badge ────────────────────────────────────────────────────────────────
+.umet-type-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+// Fecha — override DSpace
+.umet-sidebar-field ::ng-deep ds-item-page-date-field {
+  .item-page-field-wrapper { margin-bottom: 0; }
+  span { font-size: 0.88rem; color: #3d5464; font-weight: 500; }
+}
+
+// Licencia CC
+.umet-license-link  { text-decoration: none; display: inline-block; }
+.umet-license-badge { width: 130px; height: auto; border-radius: 4px; border: 1px solid #dce6ed; display: block; }
+.umet-license-text  { font-size: 0.82rem; color: #22bcb9; font-weight: 600; }
+
+// Access badge
+.umet-access-badge {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  text-transform: capitalize;
+
+  // Open access - verde
+  &.umet-access-open {
+    background: rgba(191, 215, 48, 0.15);
+    color: #7a9a00;
+  }
+
+  // Restricted - amarillo/naranja
+  &.umet-access-restricted {
+    background: rgba(255, 193, 7, 0.15);
+    color: #997404;
+  }
+
+  // Embargoed - gris
+  &.umet-access-embargoed {
+    background: rgba(108, 117, 125, 0.15);
+    color: #6c757d;
+  }
+
+  // Metadata only - azul claro
+  &.umet-access-metadata {
+    background: rgba(13, 202, 240, 0.15);
+    color: #087990;
+  }
+}
+
+// ── COLUMNA PRINCIPAL ─────────────────────────────────────────────────────────
+.umet-item-main {
+  border-left: 1px solid #eaeff2;
+  padding-left: 2rem;
+}
+
+// Aviso de cita con handle URI
+.umet-cite-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: #f7f9fa;
+  border-left: 3px solid #22bcb9;
+  padding: 0.85rem 1.1rem;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 1.75rem;
+
+  .umet-cite-icon  { color: #22bcb9; margin-top: 0.15rem; flex-shrink: 0; font-size: 0.9rem; }
+  .umet-cite-label { display: block; font-size: 0.8rem; color: #5a7285; margin-bottom: 0.3rem; font-style: italic; }
+
+  .umet-cite-uri {
+    font-size: 0.82rem;
+    color: #22bcb9;
+    font-weight: 600;
+    word-break: break-all;
+    text-decoration: none;
+    &:hover { color: #00253c; text-decoration: underline; }
+  }
+}
+
+
+// Overrides de componentes DSpace dentro de la columna principal
+.umet-item-main ::ng-deep {
+
+  // Etiquetas — mismo estilo que sidebar
+  h5,
+  .item-page-field-wrapper > h5,
+  ds-metadata-field-wrapper > h5 {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #00253c;
+    margin-bottom: 0.5rem;
+  }
+
+  .item-page-field-wrapper,
+  ds-metadata-field-wrapper { margin-bottom: 1.25rem; }
+
+  // Autores enlazables
+  ds-metadata-representation-list {
+    a { color: #22bcb9; font-weight: 600; text-decoration: none;
+        &:hover { color: #00253c; text-decoration: underline; } }
+    span { font-size: 0.9rem; }
+  }
+
+  // Resumen con truncatable
+  ds-truncatable {
+    .abstract-text {
+      font-size: 0.92rem;
+      color: #3d4a52;
+      line-height: 1.75;
+    }
+
+    .expandButton, .collapseButton {
+      color: #22bcb9;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+
+      &:hover {
+        color: #00253c;
+        text-decoration: none;
+      }
+
+      i {
+        margin-right: 0.25rem;
+      }
+    }
+  }
+
+  // Colecciones
+  ds-item-page-collections a {
+    color: #22bcb9; font-weight: 600; text-decoration: none;
+    &:hover { color: #00253c; text-decoration: underline; }
+  }
+
+  // Valores de campos genéricos
+  ds-generic-item-page-field span { font-size: 0.9rem; color: #3d4a52; }
+}
+
+// Botón página completa
+.umet-full-page-btn-wrap {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #eaeff2;
+}
+
+.umet-btn-full-page {
+  border: 2px solid #22bcb9;
+  color: #22bcb9;
+  background: transparent;
+  padding: 0.5rem 1.4rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  i { margin-right: 0.4rem; }
+
+  &:hover { background: #22bcb9; color: #fff; text-decoration: none; }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .umet-item-sidebar { padding-right: 0; margin-bottom: 2rem; }
+  .umet-item-main    { border-left: none; padding-left: 0; border-top: 1px solid #eaeff2; padding-top: 1.5rem; }
+}

@@ -53,6 +53,9 @@ import {
 import {
   ItemSearchResultListElementComponent
 } from './app/shared/object-list/search-result-list-element/item-search-result/item-types/item/item-search-result-list-element.component';
+import {
+  ItemListElementComponent
+} from './app/shared/object-list/item-list-element/item-types/item/item-list-element.component';
 import { TopLevelCommunityListComponent } from './app/home-page/top-level-community-list/top-level-community-list.component';
 
 
@@ -74,6 +77,7 @@ const ENTRY_COMPONENTS = [
   StartsWithTextComponent,
   PublicationSidebarSearchListElementComponent,
   ItemSearchResultListElementComponent,
+  ItemListElementComponent,
   TopLevelCommunityListComponent,
 ];
 

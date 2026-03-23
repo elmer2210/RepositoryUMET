@@ -1,0 +1,70 @@
+// ================================================================
+// UMET — Collection PAGE styles
+// ================================================================
+
+@import '../../styles/theme_sass_variable_overrides';
+
+// ── Page Header ─────────────────────────────────────────────────
+.umet-collection-page-header {
+  padding: 1.5rem 0 0;
+  margin-bottom: 0;
+
+  .umet-collection-header-content {
+    padding: 1.5rem 0 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    border-bottom: $umet-nova solid 3px;
+  }
+
+  .umet-collection-header-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba($umet-nova, 0.15);
+    border: 2px solid rgba($umet-nova, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    i {
+      font-size: 1.5rem;
+      color: $umet-nova;
+    }
+  }
+
+  .umet-collection-page-title {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: $umet-space;
+    margin: 0 0 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .umet-collection-page-subtitle {
+    color: $umet-space;
+    font-size: 0.95rem;
+    margin: 0 0 0.35rem;
+  }
+
+  .umet-collection-handle {
+    font-size: 0.8rem;
+    color: $umet-nova;
+    text-decoration: none;
+    opacity: 0.85;
+
+    i { font-size: 0.75rem; }
+
+    &:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+  }
+}
+
+// ── Collection Content ───────────────────────────────────────────
+.umet-collection-page {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}

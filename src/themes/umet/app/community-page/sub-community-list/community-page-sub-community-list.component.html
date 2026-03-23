@@ -1,0 +1,51 @@
+<ng-container *ngVar="(subCommunitiesRDObs | async) as subCommunitiesRD">
+
+  <div class="umet-sublist-section" *ngIf="subCommunitiesRD?.hasSucceeded && subCommunitiesRD?.payload.totalElements > 0" @fadeIn>
+
+    <!-- ══ Section header ══════════════════════════════════════ -->
+    <div class="umet-sublist-header">
+      <div class="umet-sublist-header-icon">
+        <i class="fas fa-object-group"></i>
+      </div>
+      <h2 class="umet-sublist-title">{{'community.sub-community-list.head' | translate}}</h2>
+      <span class="umet-sublist-count">{{ subCommunitiesRD.payload.totalElements }}</span>
+    </div>
+
+    <!-- ══ Cards ═══════════════════════════════════════════════ -->
+    <div class="umet-sublist-items">
+      <div class="umet-sublist-card" *ngFor="let community of subCommunitiesRD.payload.page">
+        <div class="umet-card-accent"></div>
+        <div class="umet-card-body">
+          <div class="umet-card-icon">
+            <i class="fas fa-object-group"></i>
+          </div>
+          <div class="umet-card-info">
+            <a [routerLink]="['/communities', community.id]" class="umet-card-name">
+              {{ community.name }}
+            </a>
+            <p *ngIf="community.shortDescription" class="umet-card-desc">
+              {{ community.shortDescription }}
+            </p>
+          </div>
+          <span *ngIf="community.archivedItemsCount >= 0" class="umet-count-badge"
+                title="{{ community.archivedItemsCount }} ítems">
+            {{ community.archivedItemsCount }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Pagination ══════════════════════════════════════════ -->
+    <div *ngIf="subCommunitiesRD.payload.totalElements > config.pageSize">
+      <ds-pagination [paginationOptions]="config"
+                     [collectionSize]="subCommunitiesRD.payload.totalElements"
+                     [sortOptions]="sortConfig">
+      </ds-pagination>
+    </div>
+
+  </div>
+
+  <ds-error *ngIf="subCommunitiesRD?.hasFailed" message="{{'error.sub-communities' | translate}}"></ds-error>
+  <ds-themed-loading *ngIf="subCommunitiesRD?.isLoading" message="{{'loading.sub-communities' | translate}}"></ds-themed-loading>
+
+</ng-container>

@@ -6,16 +6,129 @@
 @import '../../../styles/_global-styles.scss';
 
 // ===================================================
+// ANTI-FLASH — Prevenir parpadeos blancos durante carga
+// ===================================================
+html {
+  background-color: #00253c; // UMET Space - color del header
+}
+
+body {
+  background-color: #ffffff;
+  // Transición suave al cargar
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0.95; }
+  to { opacity: 1; }
+}
+
+// Loading state - mantener fondo consistente
+ds-root:empty,
+ds-app:empty {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #00253c 0%, #00253c 80px, #f8f9fa 80px);
+}
+
+// Skeleton loading states
+.skeleton-loader,
+[class*="loading"] {
+  background: linear-gradient(90deg, #eaeff2 25%, #f5f7f9 50%, #eaeff2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// ===================================================
 // ROOT LAYOUT — remove default top margin so home hero is flush with navbar
 // ===================================================
 .main-content {
   margin-top: 0 !important;
 }
 
-// Hide breadcrumbs on home page (they add an empty grey bar)
-ds-home-page ~ ds-themed-breadcrumbs,
-.main-content > ds-themed-breadcrumbs {
-  display: none;
+// ===================================================
+// BREADCRUMBS — styled for UMET theme
+// ===================================================
+.nav-breadcrumb {
+  background: linear-gradient(180deg, #f8fafb 0%, #eef2f5 100%);
+  border-bottom: 1px solid #dce3e8;
+  padding: 1rem 0;
+  margin-top: 0 !important;
+
+  .breadcrumb {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .breadcrumb-item {
+      display: flex;
+      align-items: center;
+      color: #5a6d7a;
+      padding: 0.25rem 0;
+
+      .breadcrumb-item-limiter {
+        max-width: 280px;
+
+        > * {
+          max-width: 100%;
+        }
+      }
+
+      a {
+        color: #22bcb9 !important;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.35rem 0.6rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: #fff !important;
+          background-color: #22bcb9;
+          text-decoration: none;
+        }
+      }
+
+      &.active {
+        color: #00253c;
+        font-weight: 700;
+
+        .breadcrumb-item-limiter > div {
+          background: rgba(0, 37, 60, 0.08);
+          padding: 0.35rem 0.75rem;
+          border-radius: 4px;
+          color: #00253c;
+        }
+      }
+
+      + .breadcrumb-item {
+        padding-left: 0;
+
+        &::before {
+          color: #22bcb9 !important;
+          content: "›" !important;
+          font-size: 1.3rem;
+          font-weight: 300;
+          padding: 0 0.5rem;
+          line-height: 1;
+        }
+      }
+    }
+  }
+}
+
+// Fix negative margin from base styles
+ds-breadcrumbs .breadcrumb,
+ds-themed-breadcrumbs .breadcrumb {
+  margin-top: 0 !important;
 }
 
 // ===================================================
@@ -128,4 +241,103 @@ ds-recent-item-list {
 .badge.badge-success {
   background-color: #22bcb9 !important;
   color: #fff !important;
+}
+
+// ===================================================
+// COMMUNITY & COLLECTION PAGE — encabezado minimalista
+// ===================================================
+ds-community-page .community-page > div > .d-flex.border-bottom,
+ds-collection-page .collection-page > div > .d-flex.border-bottom {
+  background: transparent;
+  border-bottom: 2px solid #22bcb9 !important;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+// Título de la comunidad/colección — color space
+ds-community-page .comcol-header h1,
+ds-collection-page .comcol-header h1 {
+  color: #00253c !important;
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.3px;
+}
+
+// Handle (ej. "hdl.handle.net/...")
+ds-community-page .comcol-header .comcol-page-handle,
+ds-community-page .comcol-header ds-comcol-page-handle,
+ds-collection-page .comcol-header .comcol-page-handle,
+ds-collection-page .comcol-header ds-comcol-page-handle {
+  color: #00253c !important;
+  font-size: 0.85rem;
+
+  a {
+    color: #22bcb9 !important;
+    &:hover { color: #bfd730 !important; }
+  }
+}
+
+// Texto introductorio
+ds-community-page .comcol-header ds-comcol-page-content,
+ds-collection-page .comcol-header ds-comcol-page-content {
+  color: #00253c !important;
+
+  p, span, div { color: inherit !important; }
+  a { color: #22bcb9 !important; }
+}
+
+// Botón de suscripción y menú edición
+ds-community-page .d-flex.border-bottom ds-dso-page-subscription-button .btn,
+ds-collection-page .d-flex.border-bottom ds-dso-page-subscription-button .btn {
+  border-color: #22bcb9 !important;
+  color: #22bcb9 !important;
+  background: transparent;
+
+  &:hover {
+    background-color: #22bcb9 !important;
+    color: #fff !important;
+  }
+}
+
+ds-community-page .d-flex.border-bottom ds-dso-edit-menu,
+ds-collection-page .d-flex.border-bottom ds-dso-edit-menu {
+  color: #00253c !important;
+
+  .btn, a { color: #00253c !important; }
+}
+
+// ===================================================
+// SEARCH / BROWSE — list wrapper spacing
+// ===================================================
+
+// Remove the default top/bottom border DSpace adds between list items
+ds-search-result-list ds-listable-object-component-loader > *,
+ds-browse-by ds-listable-object-component-loader > *,
+ds-object-list ds-listable-object-component-loader > * {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+// Ensure clean background on search result list
+.search-result-list-element,
+.item-search-result-list-element {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+// "Más..." toggle button — teal link, no underline
+ds-truncatable .truncatable-toggle,
+ds-truncatable a.truncatable-toggle {
+  color: #22bcb9 !important;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-decoration: none !important;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  &:hover { color: #00253c !important; }
 }

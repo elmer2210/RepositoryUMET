@@ -1,0 +1,37 @@
+<div *ngVar="(itemRD$ | async) as itemRD">
+
+  <!-- ══ Page Header ══════════════════════════════════════════ -->
+  <div class="umet-item-page-header" *ngIf="itemRD?.hasSucceeded && itemRD?.payload">
+    <div class="container">
+      <div class="umet-item-header-content">
+        <div class="umet-item-header-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <div>
+          <h1 class="umet-item-page-title">{{ itemRD.payload.firstMetadataValue('dc.title') }}</h1>
+          <p class="umet-item-page-subtitle">Repositorio Institucional UMET</p>
+          <a *ngIf="itemRD.payload.handle" class="umet-item-handle" href="{{ itemRD.payload.handle }}">
+            <i class="fas fa-link"></i> {{ itemRD.payload.handle }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Item Content ══════════════════════════════════════════ -->
+  <div class="container">
+    <div class="umet-item-page" *ngIf="itemRD?.hasSucceeded" @fadeInOut>
+      <div *ngIf="itemRD?.payload as item">
+        <ds-themed-item-alerts [item]="item"></ds-themed-item-alerts>
+        <ds-item-versions-notice [item]="item"></ds-item-versions-notice>
+        <ds-view-tracker [object]="item"></ds-view-tracker>
+        <ds-listable-object-component-loader *ngIf="!item.isWithdrawn || (isAdmin$|async)" [object]="item" [viewMode]="viewMode"></ds-listable-object-component-loader>
+        <ds-item-versions class="mt-2" [item]="item" [displayActions]="false"></ds-item-versions>
+      </div>
+    </div>
+
+    <ds-error *ngIf="itemRD?.hasFailed" message="{{'error.item' | translate}}"></ds-error>
+    <ds-themed-loading *ngIf="itemRD?.isLoading" message="{{'loading.item' | translate}}"></ds-themed-loading>
+  </div>
+
+</div>

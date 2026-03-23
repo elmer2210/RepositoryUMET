@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+.umet-section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #00253c;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #22bcb9;
+    margin: 0.5rem auto 0;
+  }
+}
+
+.umet-community-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.75rem 1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 12px rgba(0, 37, 60, 0.08);
+  border: 1px solid #e8edf1;
+  transition: all 0.25s ease;
+  height: 100%;
+  min-height: 160px;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 37, 60, 0.12);
+    border-color: #22bcb9;
+
+    .umet-community-icon {
+      background: #22bcb9;
+
+      i {
+        color: #ffffff;
+      }
+    }
+
+    .umet-community-name {
+      color: #22bcb9;
+    }
+  }
+}
+
+.umet-community-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00253c 0%, #003550 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: all 0.25s ease;
+
+  i {
+    font-size: 1.75rem;
+    color: #22bcb9;
+    transition: color 0.25s ease;
+  }
+}
+
+.umet-community-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #00253c;
+  margin: 0;
+  text-align: center;
+  transition: color 0.25s ease;
+}
+
+// Responsive
+@media (max-width: 767px) {
+  .umet-community-card {
+    padding: 1.25rem 0.75rem;
+    min-height: 140px;
+  }
+
+  .umet-community-icon {
+    width: 55px;
+    height: 55px;
+
+    i {
+      font-size: 1.4rem;
+    }
+  }
+
+  .umet-community-name {
+    font-size: 0.85rem;
+  }
+}

@@ -7,7 +7,9 @@
       "Bash(grep -rn listableObjectComponent.*''custom'' /d/DSpace/dspace-angular/src/themes/umet/)",
       "Bash(find:*)",
       "Bash(sort find:*)",
-      "Bash(grep -rn \"@import ''../../styles/theme_sass_variable_overrides''\" /d/DSpace/dspace-angular/src/themes/umet/app/)"
+      "Bash(grep -rn \"@import ''../../styles/theme_sass_variable_overrides''\" /d/DSpace/dspace-angular/src/themes/umet/app/)",
+      "Bash(sort echo:*)",
+      "Bash(git:*)"
     ]
   }
 }

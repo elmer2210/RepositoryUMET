@@ -6658,6 +6658,19 @@
   // "submission.sections.submit.progressbar.describe.steptwo": "Describe",
   "submission.sections.submit.progressbar.describe.steptwo": "Describir",
 
+  // UMET - Formularios personalizados
+  // "submission.sections.submit.progressbar.describe.thesisStep": "Thesis data",
+  "submission.sections.submit.progressbar.describe.thesisStep": "Datos de la Tesis",
+
+  // "submission.sections.submit.progressbar.describe.articleStep": "Article data",
+  "submission.sections.submit.progressbar.describe.articleStep": "Datos del Artículo",
+
+  // "submission.sections.submit.progressbar.describe.bookStep": "Book data",
+  "submission.sections.submit.progressbar.describe.bookStep": "Datos del Libro",
+
+  // "submission.sections.submit.progressbar.describe.researchStep": "Research data",
+  "submission.sections.submit.progressbar.describe.researchStep": "Datos de la Investigación",
+
   // "submission.sections.submit.progressbar.detect-duplicate": "Potential duplicates",
   "submission.sections.submit.progressbar.detect-duplicate": "Posibles duplicados",
 

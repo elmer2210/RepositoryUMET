@@ -1,0 +1,144 @@
+// ================================================================
+// UMET — Sub-Collection List styles
+// ================================================================
+
+@import '../../../styles/theme_sass_variable_overrides';
+
+// ── Section wrapper ──────────────────────────────────────────────
+.umet-sublist-section {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+// ── Section header ───────────────────────────────────────────────
+.umet-sublist-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 2px solid rgba($umet-zen, 0.45);
+}
+
+.umet-sublist-header-icon--collection {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba($umet-zen, 0.2);
+  border: 1.5px solid rgba($umet-zen, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    color: darken($umet-zen, 20%);
+    font-size: 1rem;
+  }
+}
+
+.umet-sublist-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $umet-space;
+  margin: 0;
+  flex: 1;
+}
+
+.umet-sublist-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 13px;
+  background: rgba($umet-zen, 0.2);
+  color: darken($umet-zen, 25%);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+// ── Cards list ───────────────────────────────────────────────────
+.umet-sublist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.umet-sublist-card--collection {
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba($umet-space, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba($umet-space, 0.06);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 3px 12px rgba($umet-space, 0.1);
+    border-color: rgba($umet-zen, 0.5);
+  }
+}
+
+.umet-card-accent--collection {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, $umet-zen 0%, darken($umet-zen, 12%) 100%);
+}
+
+.umet-card-body {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem 0.85rem 1.35rem;
+}
+
+.umet-card-icon--collection {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba($umet-zen, 0.18);
+  border: 1.5px solid rgba($umet-zen, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    color: darken($umet-zen, 20%);
+    font-size: 0.9rem;
+  }
+}
+
+.umet-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.umet-card-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: $umet-space;
+  text-decoration: none;
+  display: block;
+  line-height: 1.35;
+
+  &:hover {
+    color: darken($umet-zen, 20%);
+    text-decoration: underline;
+  }
+}
+
+.umet-card-desc {
+  font-size: 0.82rem;
+  color: lighten($umet-space, 22%);
+  margin: 0.2rem 0 0;
+  line-height: 1.45;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

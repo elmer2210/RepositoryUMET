@@ -54,11 +54,11 @@
              [attr.rel]="(linkType == linkTypes.ExternalLink) ? 'noopener noreferrer' : null"
              [routerLink]="[itemPageRoute]"
              class="umet-item-title dont-break-out"
-             [innerHTML]="dsoTitle">
+             [innerHTML]="dsoNameService.getName(dso)">
           </a>
           <span *ngIf="linkType == linkTypes.None"
                 class="umet-item-title dont-break-out"
-                [innerHTML]="dsoTitle">
+                [innerHTML]="dsoNameService.getName(dso)">
           </span>
         </div>
 
@@ -68,9 +68,9 @@
             <ng-container *ngIf="dso.firstMetadataValue('dc.publisher') || dso.firstMetadataValue('dc.date.issued')">
               <span class="umet-meta-institution">
                 (<span *ngIf="dso.firstMetadataValue('dc.publisher')"
-                       [innerHTML]="firstMetadataValue('dc.publisher')"></span><span
+                       [innerHTML]="dso.firstMetadataValue('dc.publisher')"></span><span
                   *ngIf="dso.firstMetadataValue('dc.publisher') && dso.firstMetadataValue('dc.date.issued')">, </span><span
-                  *ngIf="dso.firstMetadataValue('dc.date.issued')">{{ firstMetadataValue('dc.date.issued') | slice:0:10 }}</span>)
+                  *ngIf="dso.firstMetadataValue('dc.date.issued')">{{ dso.firstMetadataValue('dc.date.issued') | slice:0:10 }}</span>)
               </span>
             </ng-container>
             <span *ngIf="dso.allMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).length > 0"
@@ -86,7 +86,7 @@
         <div *ngIf="dso.firstMetadataValue('dc.description.abstract')"
              class="umet-item-abstract">
           <ds-truncatable-part [id]="dso.id" [minLines]="3">
-            <span [innerHTML]="firstMetadataValue('dc.description.abstract')"></span>
+            <span [innerHTML]="dso.firstMetadataValue('dc.description.abstract')"></span>
           </ds-truncatable-part>
         </div>
 

@@ -1,0 +1,205 @@
+<!-- Botón volver a resultados -->
+<ds-themed-results-back-button *ngIf="showBackButton | async" [back]="back"></ds-themed-results-back-button>
+
+<!-- Visor IIIF (cuando aplique) -->
+<div class="row" *ngIf="iiifEnabled">
+  <div class="col-12">
+    <ds-mirador-viewer id="iiif-viewer"
+                       [object]="object"
+                       [searchable]="iiifSearchEnabled"
+                       [query]="iiifQuery$ | async">
+    </ds-mirador-viewer>
+  </div>
+</div>
+
+<!-- Menú edición (solo admins) -->
+<div class="d-flex justify-content-end mb-1">
+  <ds-dso-edit-menu></ds-dso-edit-menu>
+</div>
+
+<!-- ══ Layout de dos columnas ══════════════════════════════════════════════ -->
+<div class="row umet-item-layout">
+
+  <!-- ── SIDEBAR IZQUIERDO ──────────────────────────────────────────────── -->
+  <aside class="col-12 col-md-3 umet-item-sidebar">
+
+    <!-- Thumbnail -->
+    <ds-metadata-field-wrapper [hideIfNoTextContent]="false">
+      <ds-themed-thumbnail [thumbnail]="object?.thumbnail | async"></ds-themed-thumbnail>
+    </ds-metadata-field-wrapper>
+
+    <!-- Archivos descargables -->
+    <div class="umet-sidebar-section umet-files-section">
+      <ds-themed-item-page-file-section [item]="object"></ds-themed-item-page-file-section>
+    </div>
+
+    <!-- Editorial -->
+    <div class="umet-sidebar-field" *ngIf="object.firstMetadataValue('dc.publisher')">
+      <span class="umet-sidebar-label">Editorial</span>
+      <span class="umet-sidebar-value">{{ object.firstMetadataValue('dc.publisher') }}</span>
+    </div>
+
+    <!-- Tipo de documento -->
+    <div class="umet-sidebar-field" *ngIf="typeLabel">
+      <span class="umet-sidebar-label">Tipo de documento</span>
+      <span class="umet-type-badge">{{ typeLabel }}</span>
+    </div>
+
+    <!-- Fecha de publicación -->
+    <div class="umet-sidebar-field">
+      <ds-item-page-date-field [item]="object"></ds-item-page-date-field>
+    </div>
+
+    <!-- Tipo de acceso -->
+    <div class="umet-sidebar-field" *ngIf="accessType">
+      <span class="umet-sidebar-label">Acceso</span>
+      <span class="umet-access-badge umet-access-{{ accessType.cssClass }}">
+        {{ accessType.label }}
+      </span>
+    </div>
+
+    <!-- Licencia CC con badge visual (siempre al final) -->
+    <div class="umet-sidebar-field" *ngIf="licenseInfo">
+      <span class="umet-sidebar-label">Licencia</span>
+      <!-- Con enlace (licencias CC) -->
+      <a *ngIf="licenseInfo.url" [href]="licenseInfo.url" target="_blank" rel="noopener noreferrer" class="umet-license-link">
+        <img *ngIf="licenseInfo.badgeUrl"
+             [src]="licenseInfo.badgeUrl"
+             [alt]="licenseInfo.label"
+             class="umet-license-badge">
+        <span *ngIf="!licenseInfo.badgeUrl" class="umet-license-text">{{ licenseInfo.label }}</span>
+      </a>
+      <!-- Sin enlace (todos los derechos reservados) -->
+      <span *ngIf="!licenseInfo.url" class="umet-license-text">{{ licenseInfo.label }}</span>
+    </div>
+
+  </aside>
+
+  <!-- ── COLUMNA PRINCIPAL ──────────────────────────────────────────────── -->
+  <main class="col-12 col-md-9 umet-item-main">
+
+    <!-- ══ SECCIÓN DE CITACIÓN ══ -->
+    <!-- Handle URI — aviso de cita -->
+    <div class="umet-cite-box" *ngIf="object.firstMetadataValue('dc.identifier.uri')">
+      <i class="fas fa-link umet-cite-icon"></i>
+      <div>
+        <span class="umet-cite-label">Por favor, use este identificador para citar o enlazar este ítem:</span>
+        <a class="umet-cite-uri"
+           [href]="object.firstMetadataValue('dc.identifier.uri')"
+           target="_blank" rel="noopener noreferrer">
+          {{ object.firstMetadataValue('dc.identifier.uri') }}
+        </a>
+      </div>
+    </div>
+
+    <!-- Autores enlazables -->
+    <ds-themed-metadata-representation-list
+      class="umet-authors-field"
+      [parentItem]="object"
+      [itemType]="'Person'"
+      [metadataFields]="['dc.contributor.author', 'dc.creator']"
+      [label]="'relationships.isAuthorOf' | translate">
+    </ds-themed-metadata-representation-list>
+
+    <!-- ORCID de autores -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.contributor.orcid') || object.firstMetadataValue('person.identifier.orcid')"
+      [item]="object"
+      [fields]="['dc.contributor.orcid', 'person.identifier.orcid']"
+      [label]="'ORCID'">
+    </ds-generic-item-page-field>
+
+    <!-- Director / Tutor (solo si existe) -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.contributor.advisor')"
+      [item]="object"
+      [fields]="['dc.contributor.advisor']"
+      [label]="'Director/Tutor'">
+    </ds-generic-item-page-field>
+
+    <!-- Publicado en (revista/libro) -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.relation.ispartof')"
+      [item]="object"
+      [fields]="['dc.relation.ispartof']"
+      [label]="'Publicado en'">
+    </ds-generic-item-page-field>
+
+    <!-- Volumen -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.bibliographicCitation.volume')"
+      [item]="object"
+      [fields]="['dc.bibliographicCitation.volume']"
+      [label]="'Volumen'">
+    </ds-generic-item-page-field>
+
+    <!-- Número -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.bibliographicCitation.issue')"
+      [item]="object"
+      [fields]="['dc.bibliographicCitation.issue']"
+      [label]="'Número'">
+    </ds-generic-item-page-field>
+
+    <!-- Páginas -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.bibliographicCitation.startPage')"
+      [item]="object"
+      [fields]="['dc.bibliographicCitation.startPage', 'dc.bibliographicCitation.endPage']"
+      [separator]="' - '"
+      [label]="'Páginas'">
+    </ds-generic-item-page-field>
+
+    <!-- ISBN -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.identifier.isbn')"
+      [item]="object"
+      [fields]="['dc.identifier.isbn']"
+      [label]="'ISBN'">
+    </ds-generic-item-page-field>
+
+    <!-- ISSN -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.identifier.issn')"
+      [item]="object"
+      [fields]="['dc.identifier.issn']"
+      [label]="'ISSN'">
+    </ds-generic-item-page-field>
+
+    <!-- DOI -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.identifier.doi')"
+      [item]="object"
+      [fields]="['dc.identifier.doi']"
+      [label]="'DOI'">
+    </ds-generic-item-page-field>
+
+    <!-- ══ CONTENIDO ══ -->
+    <!-- Resumen truncado con "Más..." -->
+    <ds-metadata-field-wrapper *ngIf="object.firstMetadataValue('dc.description.abstract')" [label]="'item.page.abstract' | translate">
+      <ds-truncatable [id]="object.id + ':abstract'">
+        <ds-truncatable-part [id]="object.id + ':abstract'" [minLines]="5">
+          <span class="abstract-text" [innerHTML]="object.firstMetadataValue('dc.description.abstract')"></span>
+        </ds-truncatable-part>
+      </ds-truncatable>
+    </ds-metadata-field-wrapper>
+
+    <!-- Materias / Palabras clave -->
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.subject']"
+      [separator]="' · '"
+      [label]="'item.page.subject'">
+    </ds-generic-item-page-field>
+
+    <!-- Colecciones -->
+    <ds-item-page-collections [item]="object"></ds-item-page-collections>
+
+    <!-- Botón página completa -->
+    <div class="umet-full-page-btn-wrap">
+      <a class="btn umet-btn-full-page" role="button" [routerLink]="[itemPageRoute + '/full']">
+        <i class="fas fa-expand-alt"></i> Página completa del ítem
+      </a>
+    </div>
+
+  </main>
+</div>
