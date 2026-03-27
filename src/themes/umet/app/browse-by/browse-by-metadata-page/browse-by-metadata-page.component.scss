@@ -4,6 +4,51 @@
 
 @import '../../../styles/theme_sass_variable_overrides';
 
+// ── Host-level background reset ─────────────────────────────────
+:host {
+  // Forzar fondo blanco en toda la página de browse
+  ::ng-deep {
+    // Reset cualquier fondo azul que pueda venir de Bootstrap o DSpace
+    .bg-primary,
+    [class*="bg-primary"],
+    .text-white,
+    .text-light {
+      background-color: transparent !important;
+    }
+
+    // Asegurar que el comcol-header y sus hijos tengan colores correctos
+    .comcol-header,
+    .comcol-header *,
+    header.comcol-header,
+    header.comcol-header * {
+      background-color: transparent !important;
+      background: transparent !important;
+    }
+
+    // Colores de texto para elementos dentro de comcol-header
+    .comcol-header h1,
+    .comcol-header h2,
+    .comcol-header h3,
+    .comcol-header h4,
+    .comcol-header h5,
+    .comcol-header h6,
+    .comcol-header p,
+    .comcol-header span,
+    .comcol-header div:not(.umet-browse-by-page) {
+      color: $umet-space !important;
+    }
+
+    // Links dentro de comcol-header
+    .comcol-header a {
+      color: $umet-nova !important;
+
+      &:hover {
+        color: $umet-zen !important;
+      }
+    }
+  }
+}
+
 // ── Page Header ──────────────────────────────────────────────────
 .browse-page-header {
   padding: 2rem 0 0;
@@ -77,9 +122,54 @@
   border-bottom: 1px solid rgba($umet-space, 0.1);
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
+  background: #fff !important;
 
   .comcol-header {
     flex: 1;
+    background: transparent !important;
+
+    // Título h1 (nombre de comunidad/colección)
+    h1 {
+      color: $umet-space !important;
+      background: transparent !important;
+    }
+  }
+
+  // Penetrar encapsulación Angular para estilos internos
+  ::ng-deep {
+    // ds-comcol-page-header host y contenido
+    ds-comcol-page-header,
+    ds-comcol-page-header * {
+      background: transparent !important;
+      color: $umet-space !important;
+    }
+
+    // ds-themed-comcol-page-handle (URI permanente)
+    ds-themed-comcol-page-handle,
+    ds-comcol-page-handle,
+    .content-with-optional-title {
+      background: transparent !important;
+
+      h2 {
+        color: $umet-space !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+      }
+
+      a {
+        color: $umet-nova !important;
+
+        &:hover {
+          color: $umet-zen !important;
+        }
+      }
+    }
+
+    // Cualquier elemento con fondo primario
+    .bg-primary,
+    [class*="bg-primary"] {
+      background: transparent !important;
+    }
   }
 }
 

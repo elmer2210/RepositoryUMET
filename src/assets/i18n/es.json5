@@ -7853,5 +7853,130 @@
   // "admin.system-wide-alert.title": "System-wide Alerts",
   "admin.system-wide-alert.title": "Alertas del sistema",
 
+  // ===================================================================
+  // TRADUCCIONES FALTANTES - Agregadas para completar interfaz
+  // ===================================================================
+
+  // Control de Acceso
+  "access-control-access-conditions": "Condiciones de acceso",
+  "access-control-add-more": "Agregar más",
+  "access-control-add-to-existing": "Agregar a las existentes",
+  "access-control-bitstream-header-toggle": "Archivos",
+  "access-control-bitstreams-selected": "archivos seleccionados",
+  "access-control-cancel": "Cancelar",
+  "access-control-execute": "Ejecutar",
+  "access-control-item-header-toggle": "Metadatos del ítem",
+  "access-control-limit-to-specific": "Limitar los cambios a archivos específicos",
+  "access-control-mode": "Modo",
+  "access-control-no-access-conditions-warning-message": "Actualmente no hay condiciones de acceso especificadas. Si se ejecuta, esto reemplazará las condiciones de acceso actuales con las condiciones heredadas de la colección propietaria.",
+  "access-control-option-end-date": "Conceder acceso hasta",
+  "access-control-option-end-date-note": "Seleccione la fecha hasta la cual se aplica la condición de acceso",
+  "access-control-option-label": "Tipo de condición de acceso",
+  "access-control-option-note": "Elija una condición de acceso para aplicar a los objetos seleccionados.",
+  "access-control-option-start-date": "Conceder acceso desde",
+  "access-control-option-start-date-note": "Seleccione la fecha desde la cual se aplica la condición de acceso",
+  "access-control-process-all-bitstreams": "Actualizar todos los archivos del ítem",
+  "access-control-replace-all": "Reemplazar condiciones de acceso",
+  "access-control-select-bitstreams-modal.close": "Cerrar",
+  "access-control-select-bitstreams-modal.no-items": "No hay elementos para mostrar.",
+  "access-control-select-bitstreams-modal.title": "Seleccionar archivos",
+
+  // Administración - Control de Acceso Masivo
+  "admin.access-control.bulk-access": "Gestión de Acceso Masivo",
+  "admin.access-control.bulk-access-browse.header": "Paso 1: Seleccionar Objetos",
+  "admin.access-control.bulk-access-browse.search.header": "Buscar",
+  "admin.access-control.bulk-access-browse.selected.header": "Selección actual ({{number}})",
+  "admin.access-control.bulk-access-settings.header": "Paso 2: Operación a Realizar",
+  "admin.access-control.bulk-access.breadcrumbs": "Gestión de Acceso Masivo",
+  "admin.access-control.bulk-access.title": "Gestión de Acceso Masivo",
+
+  // Administración - Importación
+  "admin.batch-import.page.toggle.help": "Es posible realizar la importación mediante carga de archivo o vía URL, use el selector de arriba para establecer el origen",
+  "admin.metadata-import.page.error.addFileUrl": "¡Ingrese primero la URL del archivo!",
+  "admin.metadata-import.page.toggle.upload": "Cargar archivo",
+  "admin.metadata-import.page.toggle.url": "URL",
+  "admin.metadata-import.page.urlMsg": "Ingrese la URL del archivo ZIP a importar",
+  "administrativeBulkAccess.search.results.head": "Resultados de búsqueda",
+
+  // Bitstream
+  "bitstream.edit.notifications.error.primaryBitstream.title": "Ocurrió un error al guardar el archivo principal",
+
+  // Navegación
+  "browse.comcol.by.srsc": "Por Categoría de Tema",
+  "browse.metadata.srsc.breadcrumbs": "Explorar por Categoría de Tema",
+  "browse.startsWith.input": "Filtrar",
+
+  // Control de Acceso - Colección
+  "collection-access-control-title": "Este formulario le permite realizar cambios en las condiciones de acceso de todos los ítems de esta colección. Los cambios pueden aplicarse a los metadatos o al contenido (archivos).",
+  "collection.edit.tabs.access-control.head": "Control de Acceso",
+  "collection.edit.tabs.access-control.title": "Editar Colección - Control de Acceso",
+
+  // Control de Acceso - Comunidad
+  "community-access-control-title": "Este formulario le permite realizar cambios en las condiciones de acceso de todos los ítems de cualquier colección bajo esta comunidad. Los cambios pueden aplicarse a los metadatos o al contenido (archivos).",
+  "community.edit.tabs.access-control.head": "Control de Acceso",
+  "community.edit.tabs.access-control.title": "Editar Comunidad - Control de Acceso",
+
+  // DSO
+  "dso.name.unnamed": "Sin nombre",
+
+  // Validación de Metadatos
+  "error.validation.metadata.element.invalid-pattern": "Este campo no puede contener puntos, comas o espacios. Use el campo Calificador en su lugar",
+  "error.validation.metadata.element.max-length": "Este campo no puede contener más de 64 caracteres",
+  "error.validation.metadata.name.invalid-pattern": "Este campo no puede contener puntos, comas o espacios. Use los campos Elemento y Calificador en su lugar",
+  "error.validation.metadata.name.max-length": "Este campo no puede contener más de 32 caracteres",
+  "error.validation.metadata.namespace.max-length": "Este campo no puede contener más de 256 caracteres",
+  "error.validation.metadata.qualifier.invalid-pattern": "Este campo no puede contener puntos, comas o espacios",
+  "error.validation.metadata.qualifier.max-length": "Este campo no puede contener más de 64 caracteres",
+
+  // Formulario - Información adicional
+  "form.other-information.email": "Correo electrónico",
+  "form.other-information.first-name": "Nombre",
+  "form.other-information.insolr": "En índice Solr",
+  "form.other-information.institution": "Institución",
+  "form.other-information.last-name": "Apellido",
+  "form.other-information.orcid": "ORCID",
+
+  // Info
+  "info.end-user-agreement.hosting-country": "Estados Unidos",
+
+  // Control de Acceso - Ítem
+  "item-access-control-title": "Este formulario le permite realizar cambios en las condiciones de acceso de los metadatos del ítem o sus archivos.",
+  "item.edit.curate.title": "Curar Ítem: {{item}}",
+  "item.edit.tabs.access-control.head": "Control de Acceso",
+  "item.edit.tabs.access-control.title": "Editar Ítem - Control de Acceso",
+  "item.preview.dc.publisher": "Editor:",
+
+  // Menú
+  "menu.section.access_control_bulk": "Gestión de Acceso Masivo",
+
+  // Mi Espacio
+  "mydspace.status.mydspaceArchived": "Archivado",
+  "mydspace.status.mydspaceValidation": "Validación",
+  "mydspace.status.mydspaceWaitingController": "Esperando controlador",
+  "mydspace.status.mydspaceWorkflow": "Flujo de trabajo",
+  "mydspace.status.mydspaceWorkspace": "Espacio de trabajo",
+
+  // Navegación
+  "nav.search.button": "Buscar",
+
+  // Proceso
+  "process.new.notification.error.max-upload.content": "El archivo excede el tamaño máximo de carga",
+
+  // Repositorio
+  "repository.title": "Repositorio DSpace",
+
+  // Submitter
+  "submitter.empty": "N/D",
+
+  // Workspace Item - Eliminar
+  "workspace-item.delete.breadcrumbs": "Eliminar Espacio de Trabajo",
+  "workspace-item.delete.button.cancel": "Cancelar",
+  "workspace-item.delete.button.confirm": "Eliminar",
+  "workspace-item.delete.header": "Eliminar ítem del espacio de trabajo",
+  "workspace-item.delete.notification.error.content": "No se pudo eliminar el ítem del espacio de trabajo",
+  "workspace-item.delete.notification.error.title": "Algo salió mal",
+  "workspace-item.delete.notification.success.title": "Eliminado",
+  "workspace-item.delete.title": "Este ítem del espacio de trabajo fue eliminado exitosamente",
+
 
 }

@@ -52,6 +52,60 @@ ds-app:empty {
 }
 
 // ===================================================
+// BROWSE-BY PAGES — CRITICAL FIX para colores de texto
+// ===================================================
+// Eliminar fondos azules heredados en páginas de browse-by
+ds-browse-by-metadata-page,
+ds-browse-by-date-page,
+ds-browse-by-title-page {
+  .parent-context-card,
+  .parent-context-card .comcol-header,
+  .parent-context-card header,
+  .parent-context-card header.comcol-header {
+    background: #fff !important;
+    background-color: #fff !important;
+  }
+
+  // Todos los elementos de texto dentro de parent-context-card
+  .parent-context-card h1,
+  .parent-context-card h2,
+  .parent-context-card h3,
+  .parent-context-card h4,
+  .parent-context-card h5,
+  .parent-context-card h6,
+  .parent-context-card p,
+  .parent-context-card span,
+  .parent-context-card div {
+    color: #00253c !important;
+    background: transparent !important;
+  }
+
+  // Links especiales (URI permanente)
+  .parent-context-card a {
+    color: #22bcb9 !important;
+
+    &:hover {
+      color: #bfd730 !important;
+    }
+  }
+
+  // Eliminar cualquier clase Bootstrap de fondo
+  .parent-context-card .bg-primary,
+  .parent-context-card .bg-secondary,
+  .parent-context-card .bg-dark,
+  .parent-context-card [class*="bg-"] {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  // Eliminar clases de texto blanco
+  .parent-context-card .text-white,
+  .parent-context-card .text-light {
+    color: #00253c !important;
+  }
+}
+
+// ===================================================
 // BREADCRUMBS — styled for UMET theme
 // ===================================================
 .nav-breadcrumb {
@@ -256,7 +310,10 @@ ds-collection-page .collection-page > div > .d-flex.border-bottom {
 
 // Título de la comunidad/colección — color space
 ds-community-page .comcol-header h1,
-ds-collection-page .comcol-header h1 {
+ds-collection-page .comcol-header h1,
+ds-browse-by-metadata-page .comcol-header h1,
+ds-browse-by-date-page .comcol-header h1,
+ds-browse-by-title-page .comcol-header h1 {
   color: #00253c !important;
   font-size: 1.85rem;
   font-weight: 700;
@@ -267,10 +324,27 @@ ds-collection-page .comcol-header h1 {
 // Handle (ej. "hdl.handle.net/...")
 ds-community-page .comcol-header .comcol-page-handle,
 ds-community-page .comcol-header ds-comcol-page-handle,
+ds-community-page .comcol-header ds-themed-comcol-page-handle,
 ds-collection-page .comcol-header .comcol-page-handle,
-ds-collection-page .comcol-header ds-comcol-page-handle {
+ds-collection-page .comcol-header ds-comcol-page-handle,
+ds-collection-page .comcol-header ds-themed-comcol-page-handle,
+ds-browse-by-metadata-page .comcol-header .comcol-page-handle,
+ds-browse-by-metadata-page .comcol-header ds-comcol-page-handle,
+ds-browse-by-metadata-page .comcol-header ds-themed-comcol-page-handle,
+ds-browse-by-date-page .comcol-header .comcol-page-handle,
+ds-browse-by-date-page .comcol-header ds-comcol-page-handle,
+ds-browse-by-date-page .comcol-header ds-themed-comcol-page-handle,
+ds-browse-by-title-page .comcol-header .comcol-page-handle,
+ds-browse-by-title-page .comcol-header ds-comcol-page-handle,
+ds-browse-by-title-page .comcol-header ds-themed-comcol-page-handle {
   color: #00253c !important;
   font-size: 0.85rem;
+
+  h2 {
+    color: #00253c !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
 
   a {
     color: #22bcb9 !important;
@@ -280,11 +354,74 @@ ds-collection-page .comcol-header ds-comcol-page-handle {
 
 // Texto introductorio
 ds-community-page .comcol-header ds-comcol-page-content,
-ds-collection-page .comcol-header ds-comcol-page-content {
+ds-collection-page .comcol-header ds-comcol-page-content,
+ds-browse-by-metadata-page .comcol-header ds-comcol-page-content,
+ds-browse-by-date-page .comcol-header ds-comcol-page-content,
+ds-browse-by-title-page .comcol-header ds-comcol-page-content {
   color: #00253c !important;
 
   p, span, div { color: inherit !important; }
   a { color: #22bcb9 !important; }
+}
+
+// ── Browse-by: Parent context card ───────────────────────────────
+.parent-context-card,
+.comcol-page-browse-section .comcol-header,
+.d-flex.border-bottom .comcol-header {
+  background: #fff !important;
+
+  // Título (nombre de colección/comunidad)
+  h1, h2, h3, h4, h5, h6 {
+    color: #00253c !important;
+  }
+
+  h1 {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+  }
+
+  // Handle / URI permanente
+  .content-with-optional-title {
+    h2 {
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+    }
+
+    a {
+      color: #22bcb9 !important;
+      font-size: 0.85rem !important;
+
+      &:hover {
+        color: #bfd730 !important;
+      }
+    }
+  }
+
+  // Contenido introductorio
+  ds-comcol-page-content {
+    color: #00253c !important;
+
+    p, span, div {
+      color: inherit !important;
+    }
+  }
+}
+
+// ── Forzar colores en comcol-header global ───────────────────────
+.comcol-header {
+  h1 {
+    color: #00253c !important;
+  }
+
+  .content-with-optional-title {
+    h2 {
+      color: #00253c !important;
+    }
+
+    a {
+      color: #22bcb9 !important;
+    }
+  }
 }
 
 // Botón de suscripción y menú edición

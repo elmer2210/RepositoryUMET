@@ -93,94 +93,85 @@
   white-space: nowrap;
 }
 
-// ── Type color variants ───────────────────────────────────────────────────────
+// ── Type color variants (Paleta UMET) ─────────────────────────────────────────
 
-// Tesis / Trabajo de Grado — Space (azul oscuro)
+// Space (azul oscuro) — Tesis / Trabajo de Grado
 .umet-type-thesis {
-  background: rgba(0, 37, 60, 0.07);
+  background: rgba(0, 37, 60, 0.1);
   color: #00253c;
-  border-color: rgba(0, 37, 60, 0.22);
+  border-color: rgba(0, 37, 60, 0.25);
 }
 
-// Artículo — Nova (teal)
+// Nova (teal) — Artículos
 .umet-type-article {
-  background: rgba(34, 188, 185, 0.1);
+  background: rgba(34, 188, 185, 0.12);
   color: #1a8f8c;
-  border-color: rgba(34, 188, 185, 0.35);
+  border-color: rgba(34, 188, 185, 0.4);
 }
 
-// Libro / Capítulo — Zen (lima)
+// Zen (lima) — Libros
 .umet-type-book {
-  background: rgba(191, 215, 48, 0.13);
+  background: rgba(191, 215, 48, 0.15);
   color: #5c7a00;
-  border-color: rgba(191, 215, 48, 0.45);
+  border-color: rgba(191, 215, 48, 0.5);
 }
 
-// Ponencia — ámbar complementario
-.umet-type-conference {
-  background: rgba(230, 126, 0, 0.1);
-  color: #b86000;
-  border-color: rgba(230, 126, 0, 0.3);
-}
-
-// Documento de Trabajo / Informe — gris-azul Space
-.umet-type-report {
-  background: rgba(90, 115, 135, 0.09);
-  color: #3b5a6e;
-  border-color: rgba(90, 115, 135, 0.25);
-}
-
-// Dataset / Software — violeta
-.umet-type-dataset {
-  background: rgba(111, 66, 193, 0.08);
-  color: #5e30b5;
-  border-color: rgba(111, 66, 193, 0.22);
-}
-
-// Imagen / Video / Audio — rosa-rojo
-.umet-type-media {
-  background: rgba(220, 53, 69, 0.08);
-  color: #b52030;
-  border-color: rgba(220, 53, 69, 0.22);
-}
-
-// Sin tipo / otro — Marfil neutro
+// Marfil (neutro) — Todos los demás
+.umet-type-conference,
+.umet-type-report,
+.umet-type-dataset,
+.umet-type-media,
 .umet-type-other {
   background: #eaeff2;
   color: #4a5a68;
   border-color: #c5d2dc;
 }
 
-// ── Open Access badge (naranja SPARC) ─────────────────────────────────────────
-.umet-oa-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.18rem 0.65rem;
-  background: rgba(230, 126, 0, 0.1);
-  color: #b86000;
-  border: 1px solid rgba(230, 126, 0, 0.3);
-  border-radius: 20px;
-  white-space: nowrap;
-  letter-spacing: 0.02em;
-
-  i { font-size: 0.72rem; }
-}
-
-// ── Restricted badge ──────────────────────────────────────────────────────────
-.umet-restricted-badge {
+// ── Access icon (solo icono) ──────────────────────────────────────────────────
+.umet-access-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 1.6rem;
   height: 1.6rem;
-  background: rgba(220, 53, 69, 0.08);
-  color: #b52030;
-  border: 1px solid rgba(220, 53, 69, 0.22);
   border-radius: 50%;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
+  border: 1px solid transparent;
+
+  // Acceso Abierto - verde
+  &.umet-access-open {
+    background: rgba(191, 215, 48, 0.15);
+    color: #5c7a00;
+    border-color: rgba(191, 215, 48, 0.4);
+  }
+
+  // Acceso Restringido - rojo
+  &.umet-access-restricted {
+    background: rgba(220, 53, 69, 0.1);
+    color: #b52030;
+    border-color: rgba(220, 53, 69, 0.25);
+  }
+
+  // Acceso Embargado - naranja
+  &.umet-access-embargoed {
+    background: rgba(230, 126, 0, 0.1);
+    color: #b86000;
+    border-color: rgba(230, 126, 0, 0.3);
+  }
+
+  // Solo Metadatos - gris
+  &.umet-access-metadata {
+    background: rgba(90, 115, 135, 0.1);
+    color: #3b5a6e;
+    border-color: rgba(90, 115, 135, 0.25);
+  }
+
+  // Otro - gris claro
+  &.umet-access-other {
+    background: #eaeff2;
+    color: #4a5a68;
+    border-color: #c5d2dc;
+  }
 }
 
 // ── Title ─────────────────────────────────────────────────────────────────────

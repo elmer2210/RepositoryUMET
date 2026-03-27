@@ -33,44 +33,25 @@
       <ds-themed-item-page-file-section [item]="object"></ds-themed-item-page-file-section>
     </div>
 
-    <!-- Editorial -->
-    <div class="umet-sidebar-field" *ngIf="object.firstMetadataValue('dc.publisher')">
-      <span class="umet-sidebar-label">Editorial</span>
-      <span class="umet-sidebar-value">{{ object.firstMetadataValue('dc.publisher') }}</span>
-    </div>
-
-    <!-- Tipo de documento -->
-    <div class="umet-sidebar-field" *ngIf="typeLabel">
-      <span class="umet-sidebar-label">Tipo de documento</span>
-      <span class="umet-type-badge">{{ typeLabel }}</span>
-    </div>
-
     <!-- Fecha de publicación -->
     <div class="umet-sidebar-field">
       <ds-item-page-date-field [item]="object"></ds-item-page-date-field>
     </div>
 
-    <!-- Tipo de acceso -->
-    <div class="umet-sidebar-field" *ngIf="accessType">
-      <span class="umet-sidebar-label">Acceso</span>
-      <span class="umet-access-badge umet-access-{{ accessType.cssClass }}">
-        {{ accessType.label }}
-      </span>
+    <!-- Autores -->
+    <div class="umet-sidebar-field">
+      <ds-themed-metadata-representation-list
+        [parentItem]="object"
+        [itemType]="'Person'"
+        [metadataFields]="['dc.contributor.author', 'dc.creator']"
+        [label]="'relationships.isAuthorOf' | translate">
+      </ds-themed-metadata-representation-list>
     </div>
 
-    <!-- Licencia CC con badge visual (siempre al final) -->
-    <div class="umet-sidebar-field" *ngIf="licenseInfo">
-      <span class="umet-sidebar-label">Licencia</span>
-      <!-- Con enlace (licencias CC) -->
-      <a *ngIf="licenseInfo.url" [href]="licenseInfo.url" target="_blank" rel="noopener noreferrer" class="umet-license-link">
-        <img *ngIf="licenseInfo.badgeUrl"
-             [src]="licenseInfo.badgeUrl"
-             [alt]="licenseInfo.label"
-             class="umet-license-badge">
-        <span *ngIf="!licenseInfo.badgeUrl" class="umet-license-text">{{ licenseInfo.label }}</span>
-      </a>
-      <!-- Sin enlace (todos los derechos reservados) -->
-      <span *ngIf="!licenseInfo.url" class="umet-license-text">{{ licenseInfo.label }}</span>
+    <!-- Editorial -->
+    <div class="umet-sidebar-field" *ngIf="object.firstMetadataValue('dc.publisher')">
+      <span class="umet-sidebar-label">Editorial</span>
+      <span class="umet-sidebar-value">{{ object.firstMetadataValue('dc.publisher') }}</span>
     </div>
 
   </aside>
@@ -78,9 +59,8 @@
   <!-- ── COLUMNA PRINCIPAL ──────────────────────────────────────────────── -->
   <main class="col-12 col-md-9 umet-item-main">
 
-    <!-- ══ SECCIÓN DE CITACIÓN ══ -->
-    <!-- Handle URI — aviso de cita -->
-    <div class="umet-cite-box" *ngIf="object.firstMetadataValue('dc.identifier.uri')">
+     <!-- 5. URI (desktop: box completo) -->
+    <div class="umet-cite-box d-none d-md-flex" *ngIf="object.firstMetadataValue('dc.identifier.uri')">
       <i class="fas fa-link umet-cite-icon"></i>
       <div>
         <span class="umet-cite-label">Por favor, use este identificador para citar o enlazar este ítem:</span>
@@ -92,16 +72,65 @@
       </div>
     </div>
 
-    <!-- Autores enlazables -->
-    <ds-themed-metadata-representation-list
-      class="umet-authors-field"
-      [parentItem]="object"
-      [itemType]="'Person'"
-      [metadataFields]="['dc.contributor.author', 'dc.creator']"
-      [label]="'relationships.isAuthorOf' | translate">
-    </ds-themed-metadata-representation-list>
+    <!-- 1. Resumen (español) -->
+    <ds-metadata-field-wrapper *ngIf="abstractEs" [label]="'Resumen'">
+      <ds-truncatable [id]="object.id + ':abstract-es'">
+        <ds-truncatable-part [id]="object.id + ':abstract-es'" [minLines]="5">
+          <span class="abstract-text" [innerHTML]="abstractEs"></span>
+        </ds-truncatable-part>
+      </ds-truncatable>
+    </ds-metadata-field-wrapper>
 
-    <!-- ORCID de autores -->
+    <!-- 2. Abstract (inglés) -->
+    <ds-metadata-field-wrapper *ngIf="abstractEn" [label]="'Abstract'">
+      <ds-truncatable [id]="object.id + ':abstract-en'">
+        <ds-truncatable-part [id]="object.id + ':abstract-en'" [minLines]="5">
+          <span class="abstract-text" [innerHTML]="abstractEn"></span>
+        </ds-truncatable-part>
+      </ds-truncatable>
+    </ds-metadata-field-wrapper>
+
+    <!-- 3. Palabras clave -->
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.subject']"
+      [separator]="' · '"
+      [label]="'Palabras Clave'">
+    </ds-generic-item-page-field>
+
+    <!-- 4. Tutor de Tesis -->
+    <ds-generic-item-page-field
+      *ngIf="object.firstMetadataValue('dc.contributor.advisor')"
+      [item]="object"
+      [fields]="['dc.contributor.advisor']"
+      [label]="'Tutor de Tesis'">
+    </ds-generic-item-page-field>
+
+    <!-- 5. URI (mobile: campo simple) -->
+    <div class="umet-main-field d-md-none" *ngIf="object.firstMetadataValue('dc.identifier.uri')">
+      <span class="umet-main-label">URI</span>
+      <a class="umet-field-link"
+         [href]="object.firstMetadataValue('dc.identifier.uri')"
+         target="_blank" rel="noopener noreferrer">
+        {{ object.firstMetadataValue('dc.identifier.uri') }}
+      </a>
+    </div>
+
+    <!-- 6. Colección -->
+    <ds-item-page-collections [item]="object"></ds-item-page-collections>
+
+    <!-- 7. Tipo de documento -->
+    <div class="umet-main-field" *ngIf="typeLabel">
+      <span class="umet-main-label">Tipo de documento</span>
+      <span class="umet-type-badge umet-type-{{ typeClass }}">{{ typeLabel }}</span>
+    </div>
+
+    <!-- 8. Licencia (tipo de acceso) -->
+    <div class="umet-main-field" *ngIf="accessType">
+      <span class="umet-main-label">Licencia</span>
+      <span class="umet-field-value">{{ accessType.label }}</span>
+    </div>
+
+    <!-- 9. ORCID -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.contributor.orcid') || object.firstMetadataValue('person.identifier.orcid')"
       [item]="object"
@@ -109,15 +138,7 @@
       [label]="'ORCID'">
     </ds-generic-item-page-field>
 
-    <!-- Director / Tutor (solo si existe) -->
-    <ds-generic-item-page-field
-      *ngIf="object.firstMetadataValue('dc.contributor.advisor')"
-      [item]="object"
-      [fields]="['dc.contributor.advisor']"
-      [label]="'Director/Tutor'">
-    </ds-generic-item-page-field>
-
-    <!-- Publicado en (revista/libro) -->
+    <!-- 10. Publicado en -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.relation.ispartof')"
       [item]="object"
@@ -125,7 +146,7 @@
       [label]="'Publicado en'">
     </ds-generic-item-page-field>
 
-    <!-- Volumen -->
+    <!-- 11. Volumen -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.bibliographicCitation.volume')"
       [item]="object"
@@ -133,7 +154,7 @@
       [label]="'Volumen'">
     </ds-generic-item-page-field>
 
-    <!-- Número -->
+    <!-- 12. Número -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.bibliographicCitation.issue')"
       [item]="object"
@@ -141,7 +162,7 @@
       [label]="'Número'">
     </ds-generic-item-page-field>
 
-    <!-- Páginas -->
+    <!-- 13. Páginas -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.bibliographicCitation.startPage')"
       [item]="object"
@@ -150,7 +171,7 @@
       [label]="'Páginas'">
     </ds-generic-item-page-field>
 
-    <!-- ISBN -->
+    <!-- 14. ISBN -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.identifier.isbn')"
       [item]="object"
@@ -158,7 +179,7 @@
       [label]="'ISBN'">
     </ds-generic-item-page-field>
 
-    <!-- ISSN -->
+    <!-- 15. ISSN -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.identifier.issn')"
       [item]="object"
@@ -166,7 +187,7 @@
       [label]="'ISSN'">
     </ds-generic-item-page-field>
 
-    <!-- DOI -->
+    <!-- 16. DOI -->
     <ds-generic-item-page-field
       *ngIf="object.firstMetadataValue('dc.identifier.doi')"
       [item]="object"
@@ -174,27 +195,7 @@
       [label]="'DOI'">
     </ds-generic-item-page-field>
 
-    <!-- ══ CONTENIDO ══ -->
-    <!-- Resumen truncado con "Más..." -->
-    <ds-metadata-field-wrapper *ngIf="object.firstMetadataValue('dc.description.abstract')" [label]="'item.page.abstract' | translate">
-      <ds-truncatable [id]="object.id + ':abstract'">
-        <ds-truncatable-part [id]="object.id + ':abstract'" [minLines]="5">
-          <span class="abstract-text" [innerHTML]="object.firstMetadataValue('dc.description.abstract')"></span>
-        </ds-truncatable-part>
-      </ds-truncatable>
-    </ds-metadata-field-wrapper>
-
-    <!-- Materias / Palabras clave -->
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['dc.subject']"
-      [separator]="' · '"
-      [label]="'item.page.subject'">
-    </ds-generic-item-page-field>
-
-    <!-- Colecciones -->
-    <ds-item-page-collections [item]="object"></ds-item-page-collections>
-
-    <!-- Botón página completa -->
+    <!-- 17. Botón página completa -->
     <div class="umet-full-page-btn-wrap">
       <a class="btn umet-btn-full-page" role="button" [routerLink]="[itemPageRoute + '/full']">
         <i class="fas fa-expand-alt"></i> Página completa del ítem
@@ -202,4 +203,27 @@
     </div>
 
   </main>
+</div>
+
+<!-- ══ FOOTER DE LICENCIA ══════════════════════════════════════════════════ -->
+<div class="umet-item-license-footer" *ngIf="licenseInfo">
+  <div class="row align-items-center">
+    <div class="col-auto umet-license-footer-badge">
+      <a *ngIf="licenseInfo.url" [href]="licenseInfo.url" target="_blank" rel="noopener noreferrer">
+        <img *ngIf="licenseInfo.badgeUrl"
+             [src]="licenseInfo.badgeUrl"
+             [alt]="licenseInfo.label"
+             class="umet-cc-badge-img">
+      </a>
+    </div>
+    <div class="col umet-license-footer-text">
+      <p class="umet-license-disclaimer">
+        El contenido de esta obra es de exclusiva responsabilidad de sus autores y no refleja necesariamente el pensamiento institucional de la Universidad Metropolitana ni compromete su responsabilidad frente a terceros. Los autores garantizan la originalidad del trabajo y el cumplimiento de las normas de propiedad intelectual y derechos de autor vigentes.
+      </p>
+      <p class="umet-license-link-text" *ngIf="licenseInfo.url">
+        Este ítem está sujeto a una
+        <a [href]="licenseInfo.url" target="_blank" rel="noopener noreferrer">Licencia Creative Commons</a>
+      </p>
+    </div>
+  </div>
 </div>

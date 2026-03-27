@@ -134,19 +134,30 @@ export class UntypedItemComponent extends BaseComponent {
     return UntypedItemComponent.CLASS_MAP[raw.toLowerCase().trim()] ?? 'other';
   }
 
-  get accessType(): { label: string; cssClass: string } | null {
+  get accessType(): { label: string; cssClass: string; icon: string } | null {
     const value = this.object.firstMetadataValue('dc.rights');
     if (!value) { return null; }
 
-    const accessMap: Record<string, { label: string; cssClass: string }> = {
-      'open access':          { label: 'Acceso Abierto',     cssClass: 'open' },
-      'restricted access':    { label: 'Acceso Restringido', cssClass: 'restricted' },
-      'embargoed access':     { label: 'Acceso Embargado',   cssClass: 'embargoed' },
-      'metadata only access': { label: 'Solo Metadatos',     cssClass: 'metadata' },
+    const accessMap: Record<string, { label: string; cssClass: string; icon: string }> = {
+      // URLs COAR
+      'http://purl.org/coar/access_right/c_abf2': { label: 'Acceso Abierto',     cssClass: 'open',       icon: 'fa-lock-open' },
+      'http://purl.org/coar/access_right/c_f1cf': { label: 'Acceso Embargado',   cssClass: 'embargoed',  icon: 'fa-clock' },
+      'http://purl.org/coar/access_right/c_16ec': { label: 'Acceso Restringido', cssClass: 'restricted', icon: 'fa-lock' },
+      'http://purl.org/coar/access_right/c_14cb': { label: 'Solo Metadatos',     cssClass: 'metadata',   icon: 'fa-file-alt' },
+      // Textos legacy
+      'open access':          { label: 'Acceso Abierto',     cssClass: 'open',       icon: 'fa-lock-open' },
+      'openaccess':           { label: 'Acceso Abierto',     cssClass: 'open',       icon: 'fa-lock-open' },
+      'restricted access':    { label: 'Acceso Restringido', cssClass: 'restricted', icon: 'fa-lock' },
+      'restrictedaccess':     { label: 'Acceso Restringido', cssClass: 'restricted', icon: 'fa-lock' },
+      'embargoed access':     { label: 'Acceso Embargado',   cssClass: 'embargoed',  icon: 'fa-clock' },
+      'embargoedaccess':      { label: 'Acceso Embargado',   cssClass: 'embargoed',  icon: 'fa-clock' },
+      'metadata only access': { label: 'Solo Metadatos',     cssClass: 'metadata',   icon: 'fa-file-alt' },
+      'metadataonlyaccess':   { label: 'Solo Metadatos',     cssClass: 'metadata',   icon: 'fa-file-alt' },
     };
 
-    const mapped = accessMap[value.toLowerCase()];
-    return mapped || { label: value, cssClass: 'other' };
+    // Buscar por valor exacto o lowercase
+    const mapped = accessMap[value] || accessMap[value.toLowerCase()];
+    return mapped || { label: value, cssClass: 'other', icon: 'fa-question-circle' };
   }
 
   get licenseInfo(): LicenseInfo | null {
@@ -183,5 +194,19 @@ export class UntypedItemComponent extends BaseComponent {
 
     // Otros valores - mostrar tal cual
     return { url: value.startsWith('http') ? value : '', badgeUrl: null, label: value };
+  }
+
+  /** Abstract en español */
+  get abstractEs(): string | null {
+    const abstracts = this.object.allMetadata(['dc.description.abstract']);
+    const esAbstract = abstracts.find(m => m.language === 'es_ES' || m.language === 'spa');
+    return esAbstract?.value || null;
+  }
+
+  /** Abstract en inglés */
+  get abstractEn(): string | null {
+    const abstracts = this.object.allMetadata(['dc.description.abstract']);
+    const enAbstract = abstracts.find(m => m.language === 'en_US' || m.language === 'eng');
+    return enAbstract?.value || null;
   }
 }

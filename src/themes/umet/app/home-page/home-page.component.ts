@@ -18,7 +18,7 @@ export class HomePageComponent extends BaseComponent implements OnInit {
   totalDocumentos = 0;
   totalAutores = 0;
   totalColecciones = 0;
-  totalDescargas = 0;
+  totalVisitas = 0;
 
   private http = inject(HttpClient);
 
@@ -55,24 +55,22 @@ export class HomePageComponent extends BaseComponent implements OnInit {
         }
       });
 
-    // Descargas: obtener site UUID → consultar statistics/usagereports
+    // Visitas: obtener site UUID → consultar usagereport TotalVisits
     this.http.get<any>(`${restUrl}/api/core/sites`)
       .pipe(catchError(() => of(null)))
       .subscribe(siteData => {
-        const siteLink = siteData?._embedded?.sites?.[0]?._links?.self?.href;
-        if (!siteLink) { return; }
+        const siteId = siteData?._embedded?.sites?.[0]?.uuid;
+        if (!siteId) { return; }
 
-        this.http.get<any>(`${restUrl}/api/statistics/usagereports/search/object?uri=${encodeURIComponent(siteLink)}`)
+        // Usar el endpoint directo de usagereports: {siteId}_TotalVisits
+        this.http.get<any>(`${restUrl}/api/statistics/usagereports/${siteId}_TotalVisits`)
           .pipe(catchError(() => of(null)))
-          .subscribe(statsData => {
-            const reports: any[] = statsData?._embedded?.usagereports ?? [];
-            const downloadsReport = reports.find((r: any) => r.reportType === 'TotalDownloads');
-            if (!downloadsReport) { return; }
-
-            const total = (downloadsReport.points ?? []).reduce((sum: number, point: any) => {
-              return sum + (point.values?.downloads ?? point.values?.views ?? 0);
+          .subscribe(report => {
+            if (!report?.points) { return; }
+            const total = report.points.reduce((sum: number, point: any) => {
+              return sum + (point.values?.views ?? 0);
             }, 0);
-            this.totalDescargas = total;
+            this.totalVisitas = total;
           });
       });
   }

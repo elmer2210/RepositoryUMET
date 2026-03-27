@@ -134,8 +134,26 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
     return ItemSearchResultListElementComponent.CLASS_MAP[raw.toLowerCase().trim()] ?? 'other';
   }
 
-  get isOpenAccess(): boolean {
-    return this.dso.allMetadataValues('dc.rights')
-      .some(v => v.toLowerCase().trim() === 'openaccess');
+  get accessInfo(): { icon: string; cssClass: string; label: string } | null {
+    const value = this.dso.firstMetadataValue('dc.rights');
+    if (!value) { return null; }
+
+    const accessMap: Record<string, { icon: string; cssClass: string; label: string }> = {
+      // URLs COAR
+      'http://purl.org/coar/access_right/c_abf2': { icon: 'fa-lock-open', cssClass: 'open',       label: 'Acceso Abierto' },
+      'http://purl.org/coar/access_right/c_f1cf': { icon: 'fa-clock',     cssClass: 'embargoed',  label: 'Acceso Embargado' },
+      'http://purl.org/coar/access_right/c_16ec': { icon: 'fa-lock',      cssClass: 'restricted', label: 'Acceso Restringido' },
+      'http://purl.org/coar/access_right/c_14cb': { icon: 'fa-file-alt',  cssClass: 'metadata',   label: 'Solo Metadatos' },
+      // Textos legacy
+      'openaccess':        { icon: 'fa-lock-open', cssClass: 'open',       label: 'Acceso Abierto' },
+      'open access':       { icon: 'fa-lock-open', cssClass: 'open',       label: 'Acceso Abierto' },
+      'restrictedaccess':  { icon: 'fa-lock',      cssClass: 'restricted', label: 'Acceso Restringido' },
+      'restricted access': { icon: 'fa-lock',      cssClass: 'restricted', label: 'Acceso Restringido' },
+      'embargoedaccess':   { icon: 'fa-clock',     cssClass: 'embargoed',  label: 'Acceso Embargado' },
+      'embargoed access':  { icon: 'fa-clock',     cssClass: 'embargoed',  label: 'Acceso Embargado' },
+    };
+
+    const mapped = accessMap[value] || accessMap[value.toLowerCase().trim()];
+    return mapped || { icon: 'fa-question-circle', cssClass: 'other', label: value };
   }
 }

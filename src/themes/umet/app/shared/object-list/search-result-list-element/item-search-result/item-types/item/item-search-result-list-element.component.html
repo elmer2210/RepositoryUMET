@@ -29,21 +29,16 @@
       <!-- ── COLUMNA DERECHA: contenido ─────────────────────────────── -->
       <div class="umet-content-col">
 
-        <!-- Fila 1: badge de tipo + badge de acceso -->
+        <!-- Fila 1: badge de tipo + icono de acceso -->
         <div class="umet-item-badges">
           <span *ngIf="itemTypeLabel"
                 class="umet-type-badge umet-type-{{ typeClass }}">
             {{ itemTypeLabel }}
           </span>
-          <span *ngIf="isOpenAccess"
-                class="umet-oa-badge"
-                title="Acceso Abierto">
-            <i class="fas fa-lock-open"></i> Acceso Abierto
-          </span>
-          <span *ngIf="!isOpenAccess && dso.firstMetadataValue('dc.rights')"
-                class="umet-restricted-badge"
-                title="Acceso Restringido">
-            <i class="fas fa-lock"></i>
+          <span *ngIf="accessInfo"
+                class="umet-access-icon umet-access-{{ accessInfo.cssClass }}"
+                [title]="accessInfo.label">
+            <i class="fas {{ accessInfo.icon }}"></i>
           </span>
         </div>
 

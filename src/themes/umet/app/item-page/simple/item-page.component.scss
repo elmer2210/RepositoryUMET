@@ -68,3 +68,16 @@
   padding-top: 2rem;
   padding-bottom: 3rem;
 }
+
+// ── Responsive ───────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .umet-item-page-header {
+    .umet-item-header-icon {
+      display: none;
+    }
+
+    .umet-item-page-title {
+      font-size: 1.5rem;
+    }
+  }
+}
