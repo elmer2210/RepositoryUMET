@@ -7853,6 +7853,7 @@
   // "admin.system-wide-alert.title": "System-wide Alerts",
   "admin.system-wide-alert.title": "Alertas del sistema",
 
+<<<<<<< HEAD
   // ===================================================================
   // TRADUCCIONES FALTANTES - Agregadas para completar interfaz
   // ===================================================================
@@ -7977,6 +7978,8 @@
   "workspace-item.delete.notification.error.title": "Algo salió mal",
   "workspace-item.delete.notification.success.title": "Eliminado",
   "workspace-item.delete.title": "Este ítem del espacio de trabajo fue eliminado exitosamente",
+=======
+>>>>>>> f472dfe25 (Cambios realizados en producción - configuración tema umet)
 
 
 }

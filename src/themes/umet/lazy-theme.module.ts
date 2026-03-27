@@ -132,13 +132,6 @@ import { FeedbackFormComponent } from './app/info/feedback/feedback-form/feedbac
 import {
   ItemPageTitleFieldComponent
 } from './app/item-page/simple/field-components/specific-field/title/item-page-title-field.component';
-import { MediaViewerComponent } from './app/item-page/media-viewer/media-viewer.component';
-import {
-  MediaViewerImageComponent
-} from './app/item-page/media-viewer/media-viewer-image/media-viewer-image.component';
-import {
-  MediaViewerVideoComponent
-} from './app/item-page/media-viewer/media-viewer-video/media-viewer-video.component';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import {
     DenyRequestCopyComponent
@@ -227,9 +220,6 @@ const DECLARATIONS = [
   DsDynamicLookupRelationSearchTabComponent,
   DsDynamicLookupRelationExternalSourceTabComponent,
   ItemPageTitleFieldComponent,
-  MediaViewerComponent,
-  MediaViewerImageComponent,
-  MediaViewerVideoComponent,
   DenyRequestCopyComponent,
   EmailRequestCopyComponent,
   GrantRequestCopyComponent,
