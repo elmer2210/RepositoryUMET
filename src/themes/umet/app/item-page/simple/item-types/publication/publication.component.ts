@@ -198,14 +198,14 @@ export class PublicationComponent extends BaseComponent {
   /** Abstract en español */
   get abstractEs(): string | null {
     const abstracts = this.object.allMetadata(['dc.description.abstract']);
-    const esAbstract = abstracts.find(m => m.language === 'es_ES' || m.language === 'spa');
+    const esAbstract = abstracts.find(m => m.language === 'es_ES' || m.language === 'spa' || m.language === 'es');
     return esAbstract?.value || null;
   }
 
   /** Abstract en inglés */
   get abstractEn(): string | null {
     const abstracts = this.object.allMetadata(['dc.description.abstract']);
-    const enAbstract = abstracts.find(m => m.language === 'en_US' || m.language === 'eng');
+    const enAbstract = abstracts.find(m => m.language === 'en_US' || m.language === 'eng' || m.language === 'en');
     return enAbstract?.value || null;
   }
 }
