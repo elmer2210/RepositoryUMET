@@ -15,7 +15,7 @@ import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
 import { hasValue } from '../../../shared/empty.util';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { PaginationComponentOptions } from '../../../shared/pagination/pagination-component-options.model';
-import { AlertType } from '../../../shared/alert/aletr-type';
+import { AlertType } from '../../../shared/alert/alert-type';
 import { Item } from '../../../core/shared/item.model';
 import { OrcidAuthService } from '../../../core/orcid/orcid-auth.service';
 
@@ -47,13 +47,12 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
   /**
    * A list of orcid queue records
    */
-  private list$: BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>> = new BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>>({} as any);
+  list$: BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>> = new BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>>({} as any);
 
   /**
    * The AlertType enumeration
-   * @type {AlertType}
    */
-  AlertTypeEnum = AlertType;
+  readonly AlertTypeEnum = AlertType;
 
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
@@ -97,13 +96,6 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
         this.orcidQueueService.clearFindByProfileItemRequests();
       })
     );
-  }
-
-  /**
-   * Return the list of orcid queue records
-   */
-  getList(): Observable<RemoteData<PaginatedList<OrcidQueue>>> {
-    return this.list$.asObservable();
   }
 
   /**

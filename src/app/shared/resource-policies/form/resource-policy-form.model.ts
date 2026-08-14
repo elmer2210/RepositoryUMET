@@ -40,6 +40,10 @@ const policyActionList: DynamicFormOptionConfig<any>[] = [
     value: ActionType.WRITE
   },
   {
+    label: ActionType.ADD.toString(),
+    value: ActionType.ADD,
+  },
+  {
     label: ActionType.REMOVE.toString(),
     value: ActionType.REMOVE
   },
@@ -48,7 +52,7 @@ const policyActionList: DynamicFormOptionConfig<any>[] = [
     value: ActionType.ADMIN
   },
   {
-    label: ActionType.DELETE.toString(),
+    label: 'DELETE',
     value: ActionType.DELETE
   },
   {
@@ -68,6 +72,8 @@ const policyActionList: DynamicFormOptionConfig<any>[] = [
 export const RESOURCE_POLICY_FORM_NAME_CONFIG: DsDynamicInputModelConfig = {
   id: 'name',
   label: 'resource-policies.form.name.label',
+  maxLength: 30,
+  hint: 'resource-policies.form.name.hint',
   metadataFields: [],
   repeatable: false,
   submissionId: '',

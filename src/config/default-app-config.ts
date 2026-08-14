@@ -12,7 +12,7 @@ import { MediaViewerConfig } from './media-viewer-config.interface';
 import { INotificationBoardOptions } from './notifications-config.interfaces';
 import { ServerConfig } from './server-config.interface';
 import { SubmissionConfig } from './submission-config.interface';
-import { ThemeConfig } from './theme.model';
+import { ThemeConfig } from './theme.config';
 import { UIServerConfig } from './ui-server-config.interface';
 import { BundleConfig } from './bundle-config.interface';
 import { ActuatorsConfig } from './actuators.config';
@@ -22,6 +22,9 @@ import { HomeConfig } from './homepage-config.interface';
 import { MarkdownConfig } from './markdown-config.interface';
 import { FilterVocabularyConfig } from './filter-vocabulary-config';
 import { DiscoverySortConfig } from './discovery-sort.config';
+import { LiveRegionConfig } from '../app/shared/live-region/live-region.config';
+import { SearchConfig } from './search-page-config.interface';
+import { AccessibilitySettingsConfig } from '../app/accessibility/accessibility-settings.config';
 
 export class DefaultAppConfig implements AppConfig {
   production = false;
@@ -37,6 +40,9 @@ export class DefaultAppConfig implements AppConfig {
     port: 4000,
     // NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
     nameSpace: '/',
+    // Specify the public URL that this user interface responds to. This corresponds to the "dspace.ui.url" property in your backend's local.cfg.
+    // The baseUrl is used for redirects and SEO links (in robots.txt).
+    baseUrl: 'http://localhost:4000',
 
     // The rateLimiter settings limit each IP to a 'max' of 500 requests per 'windowMs' (1 minute).
     rateLimiter: {
@@ -70,6 +76,10 @@ export class DefaultAppConfig implements AppConfig {
     },
     // Cache-Control HTTP Header
     control: 'max-age=604800', // revalidate browser
+    // These static files should not be cached (paths relative to dist/browser, including the leading slash)
+    noCacheFiles: [
+      '/index.html',  // see https://web.dev/articles/http-cache#unversioned-urls
+    ],
     autoSync: {
       defaultTime: 0,
       maxBufferSize: 100,
@@ -216,28 +226,31 @@ export class DefaultAppConfig implements AppConfig {
   // When set to active, users will be able to switch to the use of this language in the user interface.
   languages: LangConfig[] = [
     { code: 'en', label: 'English', active: true },
+    { code: 'ar', label: 'العربية', active: true },
+    { code: 'bn', label: 'বাংলা', active: true },
     { code: 'ca', label: 'Català', active: true },
     { code: 'cs', label: 'Čeština', active: true },
     { code: 'de', label: 'Deutsch', active: true },
+    { code: 'el', label: 'Ελληνικά', active: true },
     { code: 'es', label: 'Español', active: true },
+    { code: 'fi', label: 'Suomi', active: true },
     { code: 'fr', label: 'Français', active: true },
     { code: 'gd', label: 'Gàidhlig', active: true },
-    { code: 'it', label: 'Italiano', active: true },
-    { code: 'lv', label: 'Latviešu', active: true },
+    { code: 'hi', label: 'हिंदी', active: true },
     { code: 'hu', label: 'Magyar', active: true },
+    { code: 'it', label: 'Italiano', active: true },
+    { code: 'kk', label: 'Қазақ', active: true },
+    { code: 'lv', label: 'Latviešu', active: true },
     { code: 'nl', label: 'Nederlands', active: true },
     { code: 'pl', label: 'Polski', active: true },
     { code: 'pt-PT', label: 'Português', active: true },
     { code: 'pt-BR', label: 'Português do Brasil', active: true },
-    { code: 'fi', label: 'Suomi', active: true },
+    { code: 'sr-lat', label: 'Srpski (lat)', active: true },
+    { code: 'sr-cyr', label: 'Српски', active: true },
     { code: 'sv', label: 'Svenska', active: true },
     { code: 'tr', label: 'Türkçe', active: true },
+    { code: 'uk', label: 'Yкраї́нська', active: true },
     { code: 'vi', label: 'Tiếng Việt', active: true },
-    { code: 'kk', label: 'Қазақ', active: true },
-    { code: 'bn', label: 'বাংলা', active: true },
-    { code: 'hi', label: 'हिंदी', active: true},
-    { code: 'el', label: 'Ελληνικά', active: true },
-    { code: 'uk', label: 'Yкраї́нська', active: true}
   ];
 
   // Browse-By Pages
@@ -406,7 +419,8 @@ export class DefaultAppConfig implements AppConfig {
   // - All mentions of the privacy policy being removed from the UI (e.g. in the footer)
   info: InfoConfig = {
     enableEndUserAgreement: true,
-    enablePrivacyStatement: true
+    enablePrivacyStatement: true,
+    enableCookieConsentPopup: true,
   };
 
   // Whether to enable Markdown (https://commonmark.org/) and MathJax (https://www.mathjax.org/)
@@ -431,5 +445,20 @@ export class DefaultAppConfig implements AppConfig {
   comcolSelectionSort: DiscoverySortConfig = {
     sortField:'dc.title',
     sortDirection:'ASC',
+  };
+
+  // Live Region configuration, used by the LiveRegionService
+  liveRegion: LiveRegionConfig = {
+    messageTimeOutDurationMs: 30000,
+    isVisible: false,
+  };
+
+  search: SearchConfig = {
+    filterPlaceholdersCount: 5
+  };
+
+  // Accessibility settings configuration, used by the AccessibilitySettingsService
+  accessibility: AccessibilitySettingsConfig = {
+    cookieExpirationDuration: 7,
   };
 }

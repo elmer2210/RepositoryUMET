@@ -12,14 +12,12 @@
 # https://github.com/DSpace/DSpace/blob/main/dspace/src/main/docker-compose/cli.ingest.yml
 #
 # Therefore, it should be kept in sync with that file
-version: "3.7"
-
 services:
   dspace-cli:
     environment:
-    - AIPZIP=https://github.com/DSpace-Labs/AIP-Files/raw/main/dogAndReport.zip
-    - ADMIN_EMAIL=test@test.edu
-    - AIPDIR=/tmp/aip-dir
+    - AIPZIP=${AIPZIP:-https://github.com/DSpace-Labs/AIP-Files/raw/main/dogAndReport.zip}
+    - ADMIN_EMAIL=${ADMIN_EMAIL:-test@test.edu}
+    - AIPDIR=${AIPDIR:-/tmp/aip-dir}
     entrypoint:
       - /bin/bash
       - '-c'

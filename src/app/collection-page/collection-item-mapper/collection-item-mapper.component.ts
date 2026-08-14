@@ -120,7 +120,7 @@ export class CollectionItemMapperComponent implements OnInit {
 
     this.collectionName$ = this.collectionRD$.pipe(
       map((rd: RemoteData<Collection>) => {
-        return this.dsoNameService.getName(rd.payload);
+        return this.dsoNameService.getName(rd.payload, true);
       })
     );
     this.searchOptions$ = this.searchConfigService.paginatedSearchOptions;
@@ -144,7 +144,9 @@ export class CollectionItemMapperComponent implements OnInit {
           this.shouldUpdate$.next(false);
         }
         return this.itemDataService.findListByHref(collectionRD.payload._links.mappedItems.href, Object.assign(options, {
-          sort: this.defaultSortOptions
+          currentPage: options.pagination.currentPage,
+          elementsPerPage: options.pagination.pageSize,
+          sort: this.defaultSortOptions,
         }),!shouldUpdate, false, followLink('owningCollection')).pipe(
           getAllSucceededRemoteData()
         );

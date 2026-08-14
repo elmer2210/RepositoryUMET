@@ -157,8 +157,8 @@ DSPACE_UI_SSL => DSPACE_SSL
 
 The same settings can also be overwritten by setting system environment variables instead, E.g.:
 ```bash
-export DSPACE_HOST=api7.dspace.org
-export DSPACE_UI_PORT=4200
+export DSPACE_HOST=demo.dspace.org
+export DSPACE_UI_PORT=4000
 ```
 
 The priority works as follows: **environment variable** overrides **variable in `.env` file** overrides external config set by `DSPACE_APP_CONFIG_PATH` overrides **`config.(prod or dev).yml`**
@@ -285,10 +285,10 @@ If you run into odd test errors, see the Angular guide to debugging tests: https
 
 E2E tests (aka integration tests) use [Cypress.io](https://www.cypress.io/). Configuration for cypress can be found in the `cypress.json` file in the root directory.
 
-The test files can be found in the `./cypress/integration/` folder.
+The test files can be found in the `./cypress/e2e/` folder.
 
 Before you can run e2e tests, two things are REQUIRED:
-1. You MUST be running the DSpace backend (i.e. REST API) locally. The e2e tests will *NOT* succeed if run against our demo REST API (https://api7.dspace.org/server/), as that server is uncontrolled and may have content added/removed at any time.
+1. You MUST be running the DSpace backend (i.e. REST API) locally. The e2e tests will *NOT* succeed if run against our demo/sandbox REST API (https://demo.dspace.org/server/ or https://sandbox.dspace.org/server/), as those sites may have content added/removed at any time.
     * After starting up your backend on localhost, make sure either your `config.prod.yml` or `config.dev.yml` has its `rest` settings defined to use that localhost backend.
 	* If you'd prefer, you may instead use environment variables as described at [Configuring](#configuring). For example:
        ```
@@ -313,7 +313,7 @@ The `ng e2e` command will start Cypress and allow you to select the browser you 
 
 #### Writing E2E Tests
 
-All E2E tests must be created under the `./cypress/integration/` folder, and must end in `.spec.ts`. Subfolders are allowed.
+All E2E tests must be created under the `./cypress/e2e/` folder, and must end in `.spec.ts`. Subfolders are allowed.
 
 * The easiest way to start creating new tests is by running `ng e2e`. This builds the app and brings up Cypress.
 * From here, if you are editing an existing test file, you can either open it in your IDE or run it first to see what it already does.
@@ -392,9 +392,9 @@ dspace-angular
 ├── config                                              *
 │   └── config.yml                                      * Default app config
 ├── cypress                                             * Folder for Cypress (https://cypress.io/) / e2e tests
-│   ├── downloads                                       *
-│   ├── fixtures                                        * Folder for e2e/integration test files
-│   ├── integration                                     * Folder for any fixtures needed by e2e tests
+│   ├── downloads                                       * (Optional) Folder for files downloaded during e2e tests
+│   ├── e2e                                             * Folder for e2e/integration test files
+│   ├── fixtures                                        * Folder for reusable static test data (JSON, images, etc.)
 │   ├── plugins                                         * Folder for Cypress plugins (if any)
 │   ├── support                                         * Folder for global e2e test actions/commands (run for all tests)
 │   └── tsconfig.json                                   * TypeScript configuration file for e2e tests

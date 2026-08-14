@@ -328,7 +328,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
         const relationship$ = this.relationshipService.findById(this.value.virtualValue,
           true,
           true,
-          ... itemLinksToFollow(this.fetchThumbnail)).pipe(
+          ... itemLinksToFollow(this.fetchThumbnail, this.appConfig.item.showAccessStatuses)).pipe(
             getAllSucceededRemoteData(),
             getRemoteDataPayload());
         this.relationshipValue$ = observableCombineLatest([this.item$.pipe(take(1)), relationship$]).pipe(
@@ -486,6 +486,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
    * Unsubscribe from all subscriptions
    */
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.subs
       .filter((sub) => hasValue(sub))
       .forEach((sub) => sub.unsubscribe());

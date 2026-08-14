@@ -26,12 +26,12 @@ import * as ejs from 'ejs';
 import * as compression from 'compression';
 import * as expressStaticGzip from 'express-static-gzip';
 /* eslint-enable import/no-namespace */
-import axios from 'axios';
 import LRU from 'lru-cache';
-import isbot from 'isbot';
+import { isbot } from 'isbot';
 import { createCertificate } from 'pem';
 import { createServer } from 'https';
 import { json } from 'body-parser';
+import { createHttpTerminator } from 'http-terminator';
 
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -52,8 +52,10 @@ import { ServerAppModule } from './src/main.server';
 import { buildAppConfig } from './src/config/config.server';
 import { APP_CONFIG, AppConfig } from './src/config/app-config.interface';
 import { extendEnvironmentWithAppConfig } from './src/config/config.util';
+import { ServerHashedFileMapping } from './src/modules/dynamic-hash/hashed-file-mapping.server';
 import { logStartupMessage } from './startup-message';
 import { TOKENITEM } from './src/app/core/auth/models/auth-token-info.model';
+import { SsrExcludePatterns } from './src/config/universal-config.interface';
 
 
 /*
@@ -67,7 +69,11 @@ const indexHtml = join(DIST_FOLDER, 'index.html');
 
 const cookieParser = require('cookie-parser');
 
-const appConfig: AppConfig = buildAppConfig(join(DIST_FOLDER, 'assets/config.json'));
+const configJson = join(DIST_FOLDER, 'assets/config.json');
+const hashedFileMapping = new ServerHashedFileMapping(DIST_FOLDER, 'index.html');
+const appConfig: AppConfig = buildAppConfig(configJson, hashedFileMapping);
+appConfig.themes.forEach(themeConfig => hashedFileMapping.addThemeStyle(themeConfig.name, themeConfig.prefetch));
+hashedFileMapping.save();
 
 // cache of SSR pages for known bots, only enabled in production mode
 let botCache: LRU<string, any>;
@@ -77,6 +83,9 @@ let anonymousCache: LRU<string, any>;
 
 // extend environment with app config for server
 extendEnvironmentWithAppConfig(environment, appConfig);
+
+// The REST server base URL
+const REST_BASE_URL = environment.rest.ssrBaseUrl || environment.rest.baseUrl;
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
@@ -130,6 +139,7 @@ export function app() {
   server.engine('html', (_, options, callback) =>
     ngExpressEngine({
       bootstrap: ServerAppModule,
+      inlineCriticalCss: environment.universal.inlineCriticalCss,
       providers: [
         {
           provide: REQUEST,
@@ -161,7 +171,7 @@ export function app() {
   server.get('/robots.txt', (req, res) => {
     res.setHeader('content-type', 'text/plain');
     res.render('assets/robots.txt.ejs', {
-      'origin': req.protocol + '://' + req.headers.host
+      'origin': environment.ui.baseUrl,
     });
   });
 
@@ -174,7 +184,7 @@ export function app() {
    * Proxy the sitemaps
    */
   router.use('/sitemap**', createProxyMiddleware({
-    target: `${environment.rest.baseUrl}/sitemaps`,
+    target: `${REST_BASE_URL}/sitemaps`,
     pathRewrite: path => path.replace(environment.ui.nameSpace, '/'),
     changeOrigin: true
   }));
@@ -183,7 +193,7 @@ export function app() {
    * Proxy the linksets
    */
   router.use('/signposting**', createProxyMiddleware({
-    target: `${environment.rest.baseUrl}`,
+    target: `${REST_BASE_URL}`,
     pathRewrite: path => path.replace(environment.ui.nameSpace, '/'),
     changeOrigin: true
   }));
@@ -236,7 +246,7 @@ export function app() {
  * The callback function to serve server side angular
  */
 function ngApp(req, res) {
-  if (environment.universal.preboot) {
+  if (environment.universal.preboot && req.method === 'GET' && (req.path === '/' || !isExcludedFromSsr(req.path, environment.universal.excludePathPatterns))) {
     // Render the page to user via SSR (server side rendering)
     serverSideRender(req, res);
   } else {
@@ -267,6 +277,11 @@ function serverSideRender(req, res, sendToUser: boolean = true) {
     requestUrl: req.originalUrl,
   }, (err, data) => {
     if (hasNoValue(err) && hasValue(data)) {
+      // Replace REST URL with UI URL
+        if (environment.universal.replaceRestUrl && REST_BASE_URL !== environment.rest.baseUrl) {
+          data = data.replace(new RegExp(REST_BASE_URL, 'g'), environment.rest.baseUrl);
+      }
+
       // save server side rendered page to cache (if any are enabled)
       saveToCache(req, data);
       if (sendToUser) {
@@ -292,13 +307,24 @@ function serverSideRender(req, res, sendToUser: boolean = true) {
   });
 }
 
-/**
- * Send back response to user to trigger direct client-side rendering (CSR)
- * @param req current request
- * @param res current response
- */
+// Read file once at startup
+const indexHtmlContent = readFileSync(indexHtml, 'utf8');
+
 function clientSideRender(req, res) {
-  res.sendFile(indexHtml);
+  const namespace = environment.ui.nameSpace || '/';
+  let html = indexHtmlContent;
+  // Replace base href dynamically
+  html = html.replace(
+    /<base href="[^"]*">/,
+    `<base href="${namespace.endsWith('/') ? namespace : namespace + '/'}">`
+  );
+
+  // Replace REST URL with UI URL
+  if (environment.universal.replaceRestUrl && REST_BASE_URL !== environment.rest.baseUrl) {
+    html = html.replace(new RegExp(REST_BASE_URL, 'g'), environment.rest.baseUrl);
+  }
+
+  res.set('Cache-Control', 'no-cache, no-store').send(html);
 }
 
 
@@ -309,7 +335,11 @@ function clientSideRender(req, res) {
  */
 function addCacheControl(req, res, next) {
   // instruct browser to revalidate
-  res.header('Cache-Control', environment.cache.control || 'max-age=604800');
+  if (environment.cache.noCacheFiles.includes(req.originalUrl)) {
+    res.header('Cache-Control', 'no-cache, no-store');
+  } else {
+    res.header('Cache-Control', environment.cache.control || 'max-age=604800');
+  }
   next();
 }
 
@@ -320,22 +350,23 @@ function initCache() {
   if (botCacheEnabled()) {
     // Initialize a new "least-recently-used" item cache (where least recently used pages are removed first)
     // See https://www.npmjs.com/package/lru-cache
-    // When enabled, each page defaults to expiring after 1 day
+    // When enabled, each page defaults to expiring after 1 day (defined in default-app-config.ts)
     botCache = new LRU( {
       max: environment.cache.serverSide.botCache.max,
-      ttl: environment.cache.serverSide.botCache.timeToLive || 24 * 60 * 60 * 1000, // 1 day
-      allowStale: environment.cache.serverSide.botCache.allowStale ?? true // if object is stale, return stale value before deleting
+      ttl: environment.cache.serverSide.botCache.timeToLive,
+      allowStale: environment.cache.serverSide.botCache.allowStale
     });
   }
 
   if (anonymousCacheEnabled()) {
     // NOTE: While caches may share SSR pages, this cache must be kept separately because the timeToLive
     // may expire pages more frequently.
-    // When enabled, each page defaults to expiring after 10 seconds (to minimize anonymous users seeing out-of-date content)
+    // When enabled, each page defaults to expiring after 10 seconds (defined in default-app-config.ts)
+    // to minimize anonymous users seeing out-of-date content
     anonymousCache = new LRU( {
       max: environment.cache.serverSide.anonymousCache.max,
-      ttl: environment.cache.serverSide.anonymousCache.timeToLive || 10 * 1000, // 10 seconds
-      allowStale: environment.cache.serverSide.anonymousCache.allowStale ?? true // if object is stale, return stale value before deleting
+      ttl: environment.cache.serverSide.anonymousCache.timeToLive,
+      allowStale: environment.cache.serverSide.anonymousCache.allowStale
     });
   }
 }
@@ -487,7 +518,7 @@ function saveToCache(req, page: any) {
  */
 function hasNotSucceeded(statusCode) {
   const rgx = new RegExp(/^20+/);
-  return !rgx.test(statusCode)
+  return !rgx.test(statusCode);
 }
 
 function retrieveHeaders(response) {
@@ -525,23 +556,46 @@ function serverStarted() {
  * @param keys SSL credentials
  */
 function createHttpsServer(keys) {
-  createServer({
+  const listener = createServer({
     key: keys.serviceKey,
     cert: keys.certificate
   }, app).listen(environment.ui.port, environment.ui.host, () => {
     serverStarted();
   });
+
+  // Graceful shutdown when signalled
+  const terminator = createHttpTerminator({server: listener});
+  process.on('SIGINT', () => {
+      void (async ()=> {
+        console.debug('Closing HTTPS server on signal');
+        await terminator.terminate().catch(e => { console.error(e); });
+        console.debug('HTTPS server closed');
+      })();
+      });
 }
 
+/**
+ * Create an HTTP server with the configured port and host.
+ */
 function run() {
-  const port = environment.ui.port || 4000;
-  const host = environment.ui.host || '/';
+  const port = environment.ui.port;
+  const host = environment.ui.host;
 
   // Start up the Node server
   const server = app();
-  server.listen(port, host, () => {
+  const listener = server.listen(port, host, () => {
     serverStarted();
   });
+
+  // Graceful shutdown when signalled
+  const terminator = createHttpTerminator({server: listener});
+  process.on('SIGINT', () => {
+      void (async () => {
+        console.debug('Closing HTTP server on signal');
+        await terminator.terminate().catch(e => { console.error(e); });
+        console.debug('HTTP server closed.');return undefined;
+        })();
+      });
 }
 
 function start() {
@@ -591,18 +645,35 @@ function start() {
   }
 }
 
+/**
+ * Check if SSR should be skipped for path
+ *
+ * @param path
+ * @param excludePathPattern
+ */
+function isExcludedFromSsr(path: string, excludePathPattern: SsrExcludePatterns[]): boolean {
+  const patterns = excludePathPattern.map(p =>
+    new RegExp(p.pattern, p.flag || '')
+  );
+  return patterns.some((regex) => {
+    return regex.test(path)
+  });
+}
+
 /*
  * The callback function to serve health check requests
  */
 function healthCheck(req, res) {
-  const baseUrl = `${environment.rest.baseUrl}${environment.actuators.endpointPath}`;
-  axios.get(baseUrl)
+  const baseUrl = `${REST_BASE_URL}${environment.actuators.endpointPath}`;
+  fetch(baseUrl)
     .then((response) => {
-      res.status(response.status).send(response.data);
+      return response.json().then((data) => {
+        res.status(response.status).send(data);
+      });
     })
     .catch((error) => {
-      res.status(error.response.status).send({
-        error: error.message
+      res.status(error?.response?.status || 503).send({
+        error: error.message,
       });
     });
 }

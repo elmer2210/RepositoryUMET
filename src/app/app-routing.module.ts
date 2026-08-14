@@ -40,11 +40,14 @@ import {
 import { ServerCheckGuard } from './core/server-check/server-check.guard';
 import { MenuResolver } from './menu.resolver';
 import { ThemedPageErrorComponent } from './page-error/themed-page-error.component';
+import { HomePageResolver } from './home-page/home-page.resolver';
+import { ViewTrackerResolverService } from './statistics/angulartics/dspace/view-tracker-resolver.service';
+import { notAuthenticatedGuard } from './core/auth/not-authenticated.guard';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: INTERNAL_SERVER_ERROR, component: ThemedPageInternalServerErrorComponent },
+      { path: INTERNAL_SERVER_ERROR, component: ThemedPageInternalServerErrorComponent, data: { title: '500.page-internal-server-error' } },
       { path: ERROR_PAGE , component: ThemedPageErrorComponent },
       {
         path: '',
@@ -63,7 +66,15 @@ import { ThemedPageErrorComponent } from './page-error/themed-page-error.compone
             path: 'home',
             loadChildren: () => import('./home-page/home-page.module')
               .then((m) => m.HomePageModule),
-            data: { showBreadcrumbs: false },
+            data: {
+              showBreadcrumbs: false,
+              dsoPath: 'site'
+            },
+            resolve: {
+              site: HomePageResolver,
+              tracking: ViewTrackerResolverService,
+            },
+
             canActivate: [EndUserAgreementCurrentUserGuard]
           },
           {
@@ -88,13 +99,13 @@ import { ThemedPageErrorComponent } from './page-error/themed-page-error.compone
             path: REGISTER_PATH,
             loadChildren: () => import('./register-page/register-page.module')
               .then((m) => m.RegisterPageModule),
-            canActivate: [SiteRegisterGuard]
+            canActivate: [notAuthenticatedGuard, SiteRegisterGuard]
           },
           {
             path: FORGOT_PASSWORD_PATH,
             loadChildren: () => import('./forgot-password/forgot-password.module')
               .then((m) => m.ForgotPasswordModule),
-            canActivate: [EndUserAgreementCurrentUserGuard]
+            canActivate: [notAuthenticatedGuard, EndUserAgreementCurrentUserGuard]
           },
           {
             path: COMMUNITY_MODULE_PATH,
@@ -159,12 +170,14 @@ import { ThemedPageErrorComponent } from './page-error/themed-page-error.compone
           {
             path: 'login',
             loadChildren: () => import('./login-page/login-page.module')
-              .then((m) => m.LoginPageModule)
+              .then((m) => m.LoginPageModule),
+            canActivate: [notAuthenticatedGuard]
           },
           {
             path: 'logout',
             loadChildren: () => import('./logout-page/logout-page.module')
-              .then((m) => m.LogoutPageModule)
+              .then((m) => m.LogoutPageModule),
+            canActivate: [AuthenticatedGuard]
           },
           {
             path: 'submit',
@@ -213,7 +226,8 @@ import { ThemedPageErrorComponent } from './page-error/themed-page-error.compone
           },
           {
             path: FORBIDDEN_PATH,
-            component: ThemedForbiddenComponent
+            component: ThemedForbiddenComponent,
+            data: { title: '403.forbidden' },
           },
           {
             path: 'statistics',
@@ -237,7 +251,7 @@ import { ThemedPageErrorComponent } from './page-error/themed-page-error.compone
               .then((m) => m.SubscriptionsPageRoutingModule),
             canActivate: [AuthenticatedGuard]
           },
-          { path: '**', pathMatch: 'full', component: ThemedPageNotFoundComponent },
+          { path: '**', pathMatch: 'full', component: ThemedPageNotFoundComponent, data: { title: '404.page-not-found' } },
         ]
       }
     ], {
@@ -251,6 +265,7 @@ import { ThemedPageErrorComponent } from './page-error/themed-page-error.compone
 })
   ],
   exports: [RouterModule],
+  providers: [HomePageResolver, ViewTrackerResolverService],
 })
 export class AppRoutingModule {
 

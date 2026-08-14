@@ -14,6 +14,10 @@ import {
 } from '../../../../community-page/community-page-routing-paths';
 import { SortDirection, SortOptions } from '../../../../core/cache/models/sort-options.model';
 import { environment } from '../../../../../environments/environment';
+import { FeatureID } from '../../../../core/data/feature-authorization/feature-id';
+import { AuthorizationDataService } from '../../../../core/data/feature-authorization/authorization-data.service';
+import { Observable } from 'rxjs';
+import { ActionType } from 'src/app/core/resource-policy/models/action-type.model';
 
 /**
  * Component to wrap a button - for top communities -
@@ -31,10 +35,17 @@ export class CreateCommunityParentSelectorComponent extends DSOSelectorModalWrap
   objectType = DSpaceObjectType.COMMUNITY;
   selectorTypes = [DSpaceObjectType.COMMUNITY];
   action = SelectorActionType.CREATE;
+  rpActionType = ActionType.ADD;
   defaultSort = new SortOptions(environment.comcolSelectionSort.sortField, environment.comcolSelectionSort.sortDirection as SortDirection);
+  isAdmin$: Observable<boolean>;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router) {
+  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router, protected authorizationService: AuthorizationDataService) {
     super(activeModal, route);
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+    this.isAdmin$ = this.authorizationService.isAuthorized(FeatureID.AdministratorOf);
   }
 
   /**

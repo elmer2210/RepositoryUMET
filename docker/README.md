@@ -20,7 +20,8 @@ the Docker compose scripts in this 'docker' folder.
 
 ### Dockerfile
 
-This Dockerfile is used to build a *development* DSpace 7 Angular UI image, published as 'dspace/dspace-angular'
+This Dockerfile is used to build a *development* mode DSpace Angular UI image, published as 'dspace/dspace-angular'. Because it uses development mode, this image supports "live reloading" of the user interface
+when local source code is modified.
 
 ```
 docker build -t dspace/dspace-angular:dspace-7_x .
@@ -35,7 +36,7 @@ docker push dspace/dspace-angular:dspace-7_x
 
 ### Dockerfile.dist
 
-The `Dockerfile.dist` is used to generate a *production* build and runtime environment.
+The `Dockerfile.dist` is used to build a *production* mode DSpace Angular UI image, published as 'dspace/dspace-angular' with a `*-dist` tag. Because it uses production mode, this image supports Server Side Rendering (SSR).
 
 ```bash
 # build the latest image
@@ -101,8 +102,8 @@ and the backend at http://localhost:8080/server/
 
 ## Run DSpace Angular dist build with DSpace Demo site backend
 
-This allows you to run the Angular UI in *production* mode, pointing it at the demo backend
-(https://api7.dspace.org/server/).
+This allows you to run the Angular UI in *production* mode, pointing it at the demo or sandbox backend
+(https://demo.dspace.org/server/ or https://sandbox.dspace.org/server/).
 
 ```
 docker-compose -f docker/docker-compose-dist.yml pull
