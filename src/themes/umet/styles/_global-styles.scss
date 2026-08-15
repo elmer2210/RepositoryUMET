@@ -246,8 +246,15 @@ ds-navbar ::ng-deep .nav-link {
 // (antes era una píldora con contorno turquesa: era el único elemento
 //  del header que no iba en blanco y rompía la homogeneidad)
 // ===================================================
-ds-themed-auth-nav-menu a.btn,
-ds-themed-auth-nav-menu button.btn {
+// OJO: no usar un selector descendente genérico (a.btn / button.btn).
+// ds-themed-auth-nav-menu también contiene, dentro del desplegable, el
+// formulario de login, cuyo submit es un .btn-primary: anularle el fondo lo
+// dejaría en blanco sobre el fondo blanco del desplegable, invisible.
+// Solo los dos disparadores que viven en la cabecera oscura:
+//   .dropdownLogin  -> texto "Iniciar sesión"
+//   .dropdownLogout -> icono de usuario
+ds-themed-auth-nav-menu button.dropdownLogin,
+ds-themed-auth-nav-menu button.dropdownLogout {
   border: 0 !important;
   border-radius: 0;
   background-color: transparent !important;
@@ -256,11 +263,13 @@ ds-themed-auth-nav-menu button.btn {
   font-weight: 600;
   font-size: 0.85rem;
 
-  // Mismo comportamiento que los enlaces del navbar: turquesa al pasar
+  // Sin cambio de color al pasar el ratón: el subrayado basta como señal de
+  // que es pulsable y el header se mantiene homogéneo en blanco.
   &:hover,
   &:focus {
     background-color: transparent !important;
-    color: #22bcb9 !important;
+    color: #fff !important;
+    text-decoration: underline;
   }
 }
 
