@@ -25,7 +25,10 @@ export class HomePageComponent extends BaseComponent implements OnInit {
   override ngOnInit(): void {
     super.ngOnInit();
 
-    const restUrl = `${environment.rest.ssl ? 'https' : 'http'}://${environment.rest.host}:${environment.rest.port}${environment.rest.nameSpace}`;
+    // Usar rest.baseUrl tal cual: es la cadena que el DspaceRestInterceptor sustituye por
+    // rest.ssrBaseUrl durante el SSR. Componer la URL a mano añadía el puerto (:443) y el
+    // replace del interceptor no coincidía, por lo que estas llamadas salían a la URL pública.
+    const restUrl = environment.rest.baseUrl;
 
     // Documentos: usar discover/search (accesible sin autenticación)
     this.http.get<any>(`${restUrl}/api/discover/search/objects?dsoType=ITEM&size=1`)
