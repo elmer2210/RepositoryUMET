@@ -3,7 +3,7 @@
     class="navbar navbar-dark navbar-expand-md p-md-0 navbar-container umet-navbar"
     role="navigation" [attr.aria-label]="'nav.main.description' | translate">
 
-  <div class="navbar-inner-container w-100" [class.container]="!(isXsOrSm$ | async)">
+  <div class="navbar-inner-container w-100" [class.container]="!(isMobile$ | async)">
     <div class="reset-padding-md w-100">
       <div id="collapsingNav">
         <ul class="navbar-nav navbar-navigation shadow-none mx-auto justify-content-center">
@@ -19,7 +19,7 @@
           </li>
 
           <!-- User menu on mobile when authenticated -->
-          <li *ngIf="(isXsOrSm$ | async) && (isAuthenticated$ | async)">
+          <li *ngIf="(isMobile$ | async) && (isAuthenticated$ | async)">
             <ds-user-menu [inExpandableNavbar]="true"></ds-user-menu>
           </li>
 
