@@ -28,6 +28,37 @@ nav.umet-navbar {
       color: #22bcb9 !important;
     }
   }
+
+  // Ítems dinámicos de primer nivel (Comunidades, Todo DSpace, Estadísticas).
+  // 7.6.7 dejó de renderizarlos como .nav-link: las secciones simples emiten
+  // .ds-menu-item y las desplegables .ds-menu-toggler-wrapper. Por eso la regla
+  // de .nav-link de arriba solo alcanzaba al enlace estático "Inicio" y el resto
+  // aparecía sin separación.
+  // Los ítems de dentro del desplegable quedan fuera a propósito: cuelgan de
+  // .dropdown-menu y los estiliza expandable-navbar-section.component.scss.
+  ::ng-deep .ds-menu-item-wrapper > ds-link-menu-item > .ds-menu-item,
+  ::ng-deep .ds-menu-item-wrapper > ds-text-menu-item > .ds-menu-item,
+  ::ng-deep .ds-menu-item-wrapper > .ds-menu-toggler-wrapper {
+    color: var(--ds-navbar-link-color) !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+
+    &:hover,
+    &:focus,
+    &.active {
+      color: var(--ds-navbar-link-color-hover) !important;
+    }
+  }
+
+  ::ng-deep .ds-menu-item-wrapper > ds-link-menu-item > .ds-menu-item,
+  ::ng-deep .ds-menu-item-wrapper > ds-text-menu-item > .ds-menu-item {
+    display: block;
+  }
 }
 
 // Mobile navbar open state

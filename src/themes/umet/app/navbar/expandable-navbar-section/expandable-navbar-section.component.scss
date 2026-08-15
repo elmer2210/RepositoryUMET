@@ -1,3 +1,11 @@
+// El .dropdown-menu se posiciona en absoluto y necesita un ancestro posicionado.
+// El core lo resuelve en su propio scss, pero al sobrescribir styleUrls el tema
+// reemplaza esa hoja en vez de sumarse a ella, y la regla se perdía: el menú
+// quedaba anclado al viewport, pegado al borde izquierdo de la pantalla.
+.ds-menu-item-wrapper {
+  position: relative;
+}
+
 // Inherit base layout
 .expandable-navbar-section {
   display: flex;
@@ -19,15 +27,17 @@
   border: 1px solid rgba(34, 188, 185, 0.4);
   border-top: none;
 
-  ::ng-deep a.nav-link {
-    padding-right: var(--bs-spacer);
-    padding-left: var(--bs-spacer);
+  // 7.6.7 renderiza los ítems del desplegable como .ds-menu-item, no .nav-link
+  ::ng-deep .ds-menu-item {
+    display: block;
+    padding: 0.4rem var(--bs-spacer);
     white-space: nowrap;
-    color: rgba(255, 255, 255, 0.85) !important;
+    text-decoration: none;
+    color: var(--ds-navbar-link-color) !important;
 
     &:hover,
     &:focus {
-      color: #22bcb9 !important;
+      color: var(--ds-navbar-link-color-hover) !important;
       background-color: rgba(34, 188, 185, 0.12);
     }
   }
