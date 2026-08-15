@@ -242,21 +242,25 @@ ds-navbar ::ng-deep .nav-link {
 }
 
 // ===================================================
-// LOGIN BUTTON — teal outline pill
+// LOGIN BUTTON — enlace blanco simple, igual que el resto del header
+// (antes era una píldora con contorno turquesa: era el único elemento
+//  del header que no iba en blanco y rompía la homogeneidad)
 // ===================================================
 ds-themed-auth-nav-menu a.btn,
 ds-themed-auth-nav-menu button.btn {
-  border-color: #22bcb9 !important;
-  color: #22bcb9 !important;
-  border-radius: 20px;
-  padding: 0.3rem 1rem;
+  border: 0 !important;
+  border-radius: 0;
+  background-color: transparent !important;
+  color: #fff !important;
+  padding: 0.3rem 0.5rem;
   font-weight: 600;
   font-size: 0.85rem;
 
+  // Mismo comportamiento que los enlaces del navbar: turquesa al pasar
   &:hover,
   &:focus {
-    background-color: #22bcb9 !important;
-    color: #fff !important;
+    background-color: transparent !important;
+    color: #22bcb9 !important;
   }
 }
 

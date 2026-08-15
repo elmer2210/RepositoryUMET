@@ -2,6 +2,13 @@
 // HERO WRAPPER
 // =============================================
 .umet-hero-wrapper {
+  // El <main> del root lleva la clase .my-cs, que aplica
+  // margin-top: var(--ds-content-spacing). En un tema claro pasa
+  // desapercibido, pero aquí deja una franja entre la línea turquesa del
+  // navbar y el hero a sangre. Lo cancelamos solo aquí, para que las
+  // páginas interiores conserven su margen superior.
+  margin-top: calc(var(--ds-content-spacing) * -1);
+
   background: linear-gradient(160deg, #00253c 0%, #003550 55%, #004060 100%);
   position: relative;
   overflow: hidden;
